@@ -147,6 +147,9 @@
                             <th scope="col">Interviewer</th>
                             <th scope="col">Type</th>
                             <th scope="col">Status</th>
+                            @can('interview-feedback.view')
+                                <th scope="col">Feedback</th>
+                            @endcan
                             <th class="text-end" scope="col">Action</th>
                         </tr>
                     </thead>
@@ -171,13 +174,25 @@
                                         {{ Illuminate\Support\Str::headline($relatedInterview->status) }}
                                     </span>
                                 </td>
+                                @can('interview-feedback.view')
+                                    <td>
+                                        @if ($relatedInterview->feedback->isNotEmpty())
+                                            <span class="table-primary-value">
+                                                {{ number_format((float) $relatedInterview->feedback->avg('rating'), 1) }} / 5
+                                            </span>
+                                            <small>{{ $relatedInterview->feedback->count() }} submitted</small>
+                                        @else
+                                            <span class="table-muted-value">Not submitted</span>
+                                        @endif
+                                    </td>
+                                @endcan
                                 <td class="text-end">
                                     <a class="btn btn-sm btn-outline-secondary" href="{{ route('interviews.show', $relatedInterview) }}">View</a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td class="empty-table-state" colspan="5">No interviews have been scheduled.</td>
+                                <td class="empty-table-state" colspan="{{ auth()->user()->can('interview-feedback.view') ? 6 : 5 }}">No interviews have been scheduled.</td>
                             </tr>
                         @endforelse
                     </tbody>

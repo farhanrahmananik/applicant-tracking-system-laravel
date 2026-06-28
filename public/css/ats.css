@@ -2180,3 +2180,302 @@ body {
         justify-content: space-between;
     }
 }
+
+.feedback-context-strip,
+.feedback-summary-card {
+    display: grid;
+    margin-top: 1.75rem;
+    border: 1px solid var(--ats-border);
+    border-radius: 8px;
+    background: var(--ats-surface);
+}
+
+.feedback-context-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feedback-summary-card {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.feedback-context-strip > div,
+.feedback-summary-card > div {
+    min-width: 0;
+    padding: 1rem 1.1rem;
+}
+
+.feedback-context-strip > div + div,
+.feedback-summary-card > div + div {
+    border-left: 1px solid var(--ats-border);
+}
+
+.feedback-context-strip span,
+.feedback-context-strip strong,
+.feedback-summary-card span,
+.feedback-summary-card strong {
+    display: block;
+}
+
+.feedback-context-strip span,
+.feedback-summary-card > div > span {
+    margin-bottom: 0.4rem;
+    color: var(--ats-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.feedback-context-strip strong,
+.feedback-summary-card > div > strong {
+    overflow-wrap: anywhere;
+    font-size: 0.82rem;
+}
+
+.feedback-decision-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--ats-border);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--ats-canvas) 60%, transparent);
+}
+
+.feedback-decision-panel fieldset {
+    min-width: 0;
+    margin: 0;
+}
+
+.feedback-rating-control {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(2.25rem, 1fr));
+    gap: 0.4rem;
+}
+
+.feedback-rating-option {
+    display: grid;
+    min-height: 2.5rem;
+    place-items: center;
+    border: 1px solid var(--ats-border);
+    border-radius: 6px;
+    color: var(--ats-muted);
+    background: var(--ats-surface);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.btn-check:checked + .feedback-rating-option {
+    border-color: var(--ats-accent);
+    color: #ffffff;
+    background: var(--ats-accent);
+}
+
+.btn-check:focus-visible + .feedback-rating-option {
+    outline: 3px solid rgb(32 107 196 / 22%);
+    outline-offset: 2px;
+}
+
+.feedback-field-error {
+    margin-top: 0.4rem;
+    color: var(--bs-form-invalid-color);
+    font-size: 0.78rem;
+}
+
+.feedback-recommendation,
+.feedback-score-badge {
+    display: inline-block;
+    padding: 0.24rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.feedback-recommendation-strong_hire {
+    color: #216e35;
+    background: #e5f5e9;
+}
+
+.feedback-recommendation-hire {
+    color: #145b9e;
+    background: #e2f0ff;
+}
+
+.feedback-recommendation-maybe {
+    color: #8a5706;
+    background: #fff1cc;
+}
+
+.feedback-recommendation-no_hire {
+    color: #8f2634;
+    background: #fbe7ea;
+}
+
+.feedback-score-badge {
+    color: #5c3b91;
+    background: #eee7fa;
+}
+
+.feedback-rating-display {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.feedback-rating-display i {
+    width: 0.55rem;
+    height: 0.55rem;
+    display: block;
+    border: 1px solid var(--ats-border);
+    border-radius: 50%;
+    background: transparent;
+}
+
+.feedback-rating-display i.active {
+    border-color: #7c4db2;
+    background: #7c4db2;
+}
+
+.feedback-rating-display strong {
+    margin-left: 0.35rem;
+}
+
+.feedback-long-copy {
+    min-height: 5rem;
+    padding: 1rem;
+    border-top: 1px solid var(--ats-border);
+    color: var(--ats-ink);
+    background: var(--ats-surface);
+    font-size: 0.84rem;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.feedback-evidence-grid .detail-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.feedback-evidence-grid .feedback-long-copy {
+    flex: 1 1 auto;
+}
+
+.interview-feedback-section {
+    overflow: hidden;
+}
+
+.interview-feedback-heading,
+.feedback-list-header,
+.feedback-list-badges,
+.feedback-list-actions {
+    display: flex;
+    align-items: center;
+}
+
+.interview-feedback-heading,
+.feedback-list-header {
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.feedback-card-list {
+    border-top: 1px solid var(--ats-border);
+}
+
+.feedback-list-card {
+    padding: 1rem;
+}
+
+.feedback-list-card + .feedback-list-card {
+    border-top: 1px solid var(--ats-border);
+}
+
+.feedback-list-header > div:first-child strong,
+.feedback-list-header > div:first-child span {
+    display: block;
+}
+
+.feedback-list-header > div:first-child strong {
+    font-size: 0.84rem;
+}
+
+.feedback-list-header > div:first-child span {
+    margin-top: 0.2rem;
+    color: var(--ats-muted);
+    font-size: 0.7rem;
+}
+
+.feedback-list-badges,
+.feedback-list-actions {
+    gap: 0.45rem;
+}
+
+.feedback-list-card p {
+    margin: 0.8rem 0;
+    color: var(--ats-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.feedback-empty-state {
+    padding: 1.5rem 1rem;
+    color: var(--ats-muted);
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+.table-muted-value {
+    color: var(--ats-muted);
+    font-size: 0.75rem;
+}
+
+[data-bs-theme='dark'] .feedback-recommendation-strong_hire {
+    color: #a9e8b7;
+    background: #20492d;
+}
+
+[data-bs-theme='dark'] .feedback-recommendation-hire {
+    color: #aad3ff;
+    background: #173d61;
+}
+
+[data-bs-theme='dark'] .feedback-recommendation-maybe {
+    color: #f5d28f;
+    background: #523b17;
+}
+
+[data-bs-theme='dark'] .feedback-recommendation-no_hire {
+    color: #f1b1ba;
+    background: #53262d;
+}
+
+[data-bs-theme='dark'] .feedback-score-badge {
+    color: #d7c0fa;
+    background: #3f2d5f;
+}
+
+@media (max-width: 767.98px) {
+    .feedback-context-strip,
+    .feedback-summary-card {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback-context-strip > div + div,
+    .feedback-summary-card > div + div {
+        border-top: 1px solid var(--ats-border);
+        border-left: 0;
+    }
+
+    .interview-feedback-heading,
+    .feedback-list-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .feedback-list-badges {
+        flex-wrap: wrap;
+    }
+}

@@ -8,6 +8,7 @@ use App\Models\InterviewSchedule;
 use App\Services\InterviewScheduleService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class InterviewScheduleController extends Controller
@@ -57,7 +58,15 @@ class InterviewScheduleController extends Controller
             'updatedBy',
         ]);
 
-        return view('interviews.show', compact('interview'));
+        $interviewFeedback = collect();
+
+        if (Gate::any(['interview-feedback.view', 'interview-feedback.create'])) {
+            $interviewFeedback = $interview->feedback()
+                ->with('submittedBy:id,name,email')
+                ->get();
+        }
+
+        return view('interviews.show', compact('interview', 'interviewFeedback'));
     }
 
     public function edit(InterviewSchedule $interview): View

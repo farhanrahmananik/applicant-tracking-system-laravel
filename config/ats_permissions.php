@@ -134,6 +134,18 @@ return [
             'name' => 'Delete interviews',
             'description' => 'Soft delete interview schedule records.',
         ],
+        'interview-feedback.view' => [
+            'name' => 'View interview feedback',
+            'description' => 'View submitted interview feedback.',
+        ],
+        'interview-feedback.create' => [
+            'name' => 'Create interview feedback',
+            'description' => 'Submit feedback for eligible interview schedules.',
+        ],
+        'interview-feedback.update' => [
+            'name' => 'Update interview feedback',
+            'description' => 'Update submitted interview feedback.',
+        ],
     ],
 
     'roles' => [
@@ -176,6 +188,9 @@ return [
                 'interviews.create',
                 'interviews.update',
                 'interviews.delete',
+                'interview-feedback.view',
+                'interview-feedback.create',
+                'interview-feedback.update',
             ],
         ],
         'recruiter' => [
@@ -197,6 +212,9 @@ return [
                 'interviews.view',
                 'interviews.create',
                 'interviews.update',
+                'interview-feedback.view',
+                'interview-feedback.create',
+                'interview-feedback.update',
             ],
         ],
         'interviewer' => [
@@ -206,6 +224,9 @@ return [
                 'access-dashboard',
                 'job-postings.view',
                 'interviews.view',
+                'interview-feedback.view',
+                'interview-feedback.create',
+                'interview-feedback.update',
             ],
         ],
         'candidate' => [
