@@ -122,6 +122,70 @@
         </section>
     </div>
 
+    @can('interviews.view')
+        <section class="detail-section application-interviews-section" aria-labelledby="application-interviews-title">
+            <div class="section-heading application-interviews-heading">
+                <div>
+                    <h2 id="application-interviews-title">Interviews</h2>
+                    <p>Scheduled conversations connected to this application.</p>
+                </div>
+                <div class="application-interviews-actions">
+                    <span class="section-status">{{ $application->interview_schedules_count }} total</span>
+                    @can('interviews.create')
+                        @unless ($application->isTerminal())
+                            <a class="btn btn-sm btn-primary" href="{{ route('interviews.create', ['application_id' => $application->id]) }}">Schedule interview</a>
+                        @endunless
+                    @endcan
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table related-interview-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Schedule</th>
+                            <th scope="col">Interviewer</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Status</th>
+                            <th class="text-end" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($applicationInterviews as $relatedInterview)
+                            <tr>
+                                <td>
+                                    <span class="table-primary-value">{{ $relatedInterview->scheduled_at->format('M j, Y') }}</span>
+                                    <small>{{ $relatedInterview->scheduled_at->format('H:i') }} - {{ $relatedInterview->duration_minutes }} min</small>
+                                </td>
+                                <td>
+                                    <span class="table-primary-value">{{ $relatedInterview->interviewer->name }}</span>
+                                    <small>{{ $relatedInterview->interviewer->email }}</small>
+                                </td>
+                                <td>
+                                    <span class="interview-badge interview-type-{{ $relatedInterview->type }}">
+                                        {{ Illuminate\Support\Str::headline($relatedInterview->type) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="interview-badge interview-status-{{ $relatedInterview->status }}">
+                                        {{ Illuminate\Support\Str::headline($relatedInterview->status) }}
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('interviews.show', $relatedInterview) }}">View</a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td class="empty-table-state" colspan="5">No interviews have been scheduled.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    @endcan
+
     <section class="detail-section application-notes-section" aria-labelledby="application-notes-title">
         <div class="section-heading">
             <div>

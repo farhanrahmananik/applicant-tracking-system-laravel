@@ -118,6 +118,22 @@ return [
             'name' => 'Delete applications',
             'description' => 'Soft delete application records.',
         ],
+        'interviews.view' => [
+            'name' => 'View interviews',
+            'description' => 'View interview schedules and details.',
+        ],
+        'interviews.create' => [
+            'name' => 'Create interviews',
+            'description' => 'Schedule interviews for active applications.',
+        ],
+        'interviews.update' => [
+            'name' => 'Update interviews',
+            'description' => 'Update interview scheduling details and status.',
+        ],
+        'interviews.delete' => [
+            'name' => 'Delete interviews',
+            'description' => 'Soft delete interview schedule records.',
+        ],
     ],
 
     'roles' => [
@@ -156,6 +172,10 @@ return [
                 'applications.create',
                 'applications.update',
                 'applications.delete',
+                'interviews.view',
+                'interviews.create',
+                'interviews.update',
+                'interviews.delete',
             ],
         ],
         'recruiter' => [
@@ -174,6 +194,9 @@ return [
                 'applications.view',
                 'applications.create',
                 'applications.update',
+                'interviews.view',
+                'interviews.create',
+                'interviews.update',
             ],
         ],
         'interviewer' => [
@@ -182,6 +205,7 @@ return [
             'permissions' => [
                 'access-dashboard',
                 'job-postings.view',
+                'interviews.view',
             ],
         ],
         'candidate' => [

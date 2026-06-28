@@ -7,6 +7,7 @@ use App\Http\Controllers\CandidateResumeController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\InterviewScheduleController;
 use App\Http\Controllers\JobPostingController;
 use Illuminate\Support\Facades\Route;
 
@@ -160,5 +161,29 @@ Route::middleware(['auth', 'active'])->prefix('applications')->name('application
         ->name('update');
     Route::delete('/{application}', [ApplicationController::class, 'destroy'])
         ->middleware('permission:applications.delete')
+        ->name('destroy');
+});
+
+Route::middleware(['auth', 'active'])->prefix('interviews')->name('interviews.')->group(function () {
+    Route::get('/', [InterviewScheduleController::class, 'index'])
+        ->middleware('permission:interviews.view')
+        ->name('index');
+    Route::get('/create', [InterviewScheduleController::class, 'create'])
+        ->middleware('permission:interviews.create')
+        ->name('create');
+    Route::post('/', [InterviewScheduleController::class, 'store'])
+        ->middleware('permission:interviews.create')
+        ->name('store');
+    Route::get('/{interview}', [InterviewScheduleController::class, 'show'])
+        ->middleware('permission:interviews.view')
+        ->name('show');
+    Route::get('/{interview}/edit', [InterviewScheduleController::class, 'edit'])
+        ->middleware('permission:interviews.update')
+        ->name('edit');
+    Route::put('/{interview}', [InterviewScheduleController::class, 'update'])
+        ->middleware('permission:interviews.update')
+        ->name('update');
+    Route::delete('/{interview}', [InterviewScheduleController::class, 'destroy'])
+        ->middleware('permission:interviews.delete')
         ->name('destroy');
 });

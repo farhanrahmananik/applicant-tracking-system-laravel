@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Services\ApplicationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class ApplicationController extends Controller
@@ -51,7 +52,17 @@ class ApplicationController extends Controller
     {
         $application->load(['candidate', 'jobPosting.company', 'jobPosting.department', 'createdBy', 'updatedBy']);
 
-        return view('applications.show', compact('application'));
+        $applicationInterviews = collect();
+
+        if (Gate::allows('interviews.view')) {
+            $application->loadCount('interviewSchedules');
+            $applicationInterviews = $application->interviewSchedules()
+                ->with('interviewer:id,name,email')
+                ->limit(8)
+                ->get();
+        }
+
+        return view('applications.show', compact('application', 'applicationInterviews'));
     }
 
     public function edit(Application $application): View

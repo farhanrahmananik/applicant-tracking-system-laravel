@@ -6,6 +6,7 @@ use Database\Factories\ApplicationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Application extends Model
@@ -73,6 +74,16 @@ class Application extends Model
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by_id');
+    }
+
+    /**
+     * @return HasMany<InterviewSchedule, $this>
+     */
+    public function interviewSchedules(): HasMany
+    {
+        return $this->hasMany(InterviewSchedule::class)
+            ->latest('scheduled_at')
+            ->latest('id');
     }
 
     public function isActive(): bool
