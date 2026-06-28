@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
@@ -93,5 +94,29 @@ Route::middleware(['auth', 'active'])->prefix('job-postings')->name('job-posting
         ->name('update');
     Route::delete('/{job_posting}', [JobPostingController::class, 'destroy'])
         ->middleware('permission:job-postings.delete')
+        ->name('destroy');
+});
+
+Route::middleware(['auth', 'active'])->prefix('candidates')->name('candidates.')->group(function () {
+    Route::get('/', [CandidateController::class, 'index'])
+        ->middleware('permission:candidates.view')
+        ->name('index');
+    Route::get('/create', [CandidateController::class, 'create'])
+        ->middleware('permission:candidates.create')
+        ->name('create');
+    Route::post('/', [CandidateController::class, 'store'])
+        ->middleware('permission:candidates.create')
+        ->name('store');
+    Route::get('/{candidate}', [CandidateController::class, 'show'])
+        ->middleware('permission:candidates.view')
+        ->name('show');
+    Route::get('/{candidate}/edit', [CandidateController::class, 'edit'])
+        ->middleware('permission:candidates.edit')
+        ->name('edit');
+    Route::put('/{candidate}', [CandidateController::class, 'update'])
+        ->middleware('permission:candidates.edit')
+        ->name('update');
+    Route::delete('/{candidate}', [CandidateController::class, 'destroy'])
+        ->middleware('permission:candidates.delete')
         ->name('destroy');
 });
