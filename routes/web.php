@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CandidateResumeController;
@@ -137,3 +138,27 @@ Route::middleware(['auth', 'active'])
             ->middleware('permission:candidate-resumes.delete')
             ->name('destroy');
     });
+
+Route::middleware(['auth', 'active'])->prefix('applications')->name('applications.')->group(function () {
+    Route::get('/', [ApplicationController::class, 'index'])
+        ->middleware('permission:applications.view')
+        ->name('index');
+    Route::get('/create', [ApplicationController::class, 'create'])
+        ->middleware('permission:applications.create')
+        ->name('create');
+    Route::post('/', [ApplicationController::class, 'store'])
+        ->middleware('permission:applications.create')
+        ->name('store');
+    Route::get('/{application}', [ApplicationController::class, 'show'])
+        ->middleware('permission:applications.view')
+        ->name('show');
+    Route::get('/{application}/edit', [ApplicationController::class, 'edit'])
+        ->middleware('permission:applications.update')
+        ->name('edit');
+    Route::put('/{application}', [ApplicationController::class, 'update'])
+        ->middleware('permission:applications.update')
+        ->name('update');
+    Route::delete('/{application}', [ApplicationController::class, 'destroy'])
+        ->middleware('permission:applications.delete')
+        ->name('destroy');
+});

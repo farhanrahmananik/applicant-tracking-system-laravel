@@ -1712,3 +1712,228 @@ body {
         padding: 1.25rem 1rem;
     }
 }
+
+.application-filter-toolbar {
+    display: grid;
+    grid-template-columns: minmax(15rem, 2fr) minmax(9rem, 1fr) minmax(13rem, 1.5fr) minmax(9rem, 1fr) auto auto;
+    gap: 0.75rem;
+    align-items: center;
+    margin: 1.75rem 0 1rem;
+}
+
+.application-filter-toolbar .form-control,
+.application-filter-toolbar .form-select {
+    width: 100%;
+}
+
+.application-person-cell a,
+.application-person-cell small {
+    display: block;
+}
+
+.application-person-cell a {
+    color: var(--ats-ink);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.application-person-cell a:hover {
+    color: var(--ats-accent);
+}
+
+.application-person-cell small {
+    margin-top: 0.2rem;
+    color: var(--ats-muted);
+    font-size: 0.7rem;
+}
+
+.application-badge {
+    display: inline-block;
+    padding: 0.24rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.application-status-applied {
+    color: #145b9e;
+    background: #e2f0ff;
+}
+
+.application-status-screening {
+    color: #8a5706;
+    background: #fff1cc;
+}
+
+.application-status-shortlisted {
+    color: #216e35;
+    background: #e5f5e9;
+}
+
+.application-status-rejected {
+    color: #8f2634;
+    background: #fbe7ea;
+}
+
+.application-status-withdrawn {
+    color: #536170;
+    background: #e9edf1;
+}
+
+.application-summary-card {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 1.75rem;
+    border: 1px solid var(--ats-border);
+    border-radius: 8px;
+    background: var(--ats-surface);
+}
+
+.application-summary-card > div {
+    min-width: 0;
+    padding: 1rem 1.1rem;
+}
+
+.application-summary-card > div + div {
+    border-left: 1px solid var(--ats-border);
+}
+
+.application-summary-card span,
+.application-summary-card strong {
+    display: block;
+}
+
+.application-summary-card > div > span {
+    margin-bottom: 0.4rem;
+    color: var(--ats-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.application-summary-card > div > strong {
+    overflow-wrap: anywhere;
+    font-size: 0.82rem;
+}
+
+.application-notes-copy {
+    min-height: 5rem;
+    padding: 1rem;
+    border-top: 1px solid var(--ats-border);
+    color: var(--ats-ink);
+    background: var(--ats-surface);
+    font-size: 0.84rem;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.related-applications-section {
+    overflow: hidden;
+}
+
+.related-applications-heading,
+.related-applications-actions {
+    display: flex;
+    align-items: center;
+}
+
+.related-applications-heading {
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.related-applications-actions {
+    flex: 0 0 auto;
+    gap: 0.75rem;
+}
+
+.related-application-table {
+    color: var(--ats-ink);
+    font-size: 0.8rem;
+}
+
+.related-application-table > :not(caption) > * > * {
+    padding: 0.8rem 1rem;
+    border-color: var(--ats-border);
+    background: transparent;
+}
+
+.related-application-table thead th {
+    color: var(--ats-muted);
+    background: color-mix(in srgb, var(--ats-canvas) 70%, transparent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.related-application-table td > small {
+    display: block;
+    margin-top: 0.15rem;
+    color: var(--ats-muted);
+    font-size: 0.7rem;
+}
+
+[data-bs-theme='dark'] .application-status-applied {
+    color: #aad3ff;
+    background: #173d61;
+}
+
+[data-bs-theme='dark'] .application-status-screening {
+    color: #f5d28f;
+    background: #523b17;
+}
+
+[data-bs-theme='dark'] .application-status-shortlisted {
+    color: #a9e8b7;
+    background: #20492d;
+}
+
+[data-bs-theme='dark'] .application-status-rejected {
+    color: #f1b1ba;
+    background: #53262d;
+}
+
+[data-bs-theme='dark'] .application-status-withdrawn {
+    color: #c4ced8;
+    background: #33404d;
+}
+
+@media (max-width: 1199.98px) {
+    .application-filter-toolbar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .application-filter-search {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .application-filter-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .application-filter-search {
+        grid-column: auto;
+    }
+
+    .application-summary-card {
+        grid-template-columns: 1fr;
+    }
+
+    .application-summary-card > div + div {
+        border-top: 1px solid var(--ats-border);
+        border-left: 0;
+    }
+
+    .related-applications-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .related-applications-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

@@ -121,6 +121,27 @@
         <div class="candidate-skills-copy">{{ $candidate->skills ?? 'No skills have been added.' }}</div>
     </section>
 
+    @can('applications.view')
+        <section class="detail-section related-applications-section" aria-labelledby="candidate-applications-title">
+            <div class="section-heading related-applications-heading">
+                <div>
+                    <h2 id="candidate-applications-title">Applications</h2>
+                    <p>Job postings connected to this candidate.</p>
+                </div>
+                <div class="related-applications-actions">
+                    <span class="section-status">{{ $candidate->applications_count }} total</span>
+                    @can('applications.create')
+                        <a class="btn btn-sm btn-primary" href="{{ route('applications.create', ['candidate_id' => $candidate->id]) }}">Create application</a>
+                    @endcan
+                </div>
+            </div>
+            @include('applications._related-table', [
+                'applications' => $candidateApplications,
+                'context' => 'candidate',
+            ])
+        </section>
+    @endcan
+
     <section class="detail-section candidate-resumes-section" aria-labelledby="candidate-resumes-title">
         <div class="section-heading candidate-resumes-heading">
             <div>

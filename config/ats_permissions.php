@@ -102,6 +102,22 @@ return [
             'name' => 'Delete candidate resumes',
             'description' => 'Soft delete candidate resume records and stored files.',
         ],
+        'applications.view' => [
+            'name' => 'View applications',
+            'description' => 'View job application records and details.',
+        ],
+        'applications.create' => [
+            'name' => 'Create applications',
+            'description' => 'Link existing candidates to job postings.',
+        ],
+        'applications.update' => [
+            'name' => 'Update applications',
+            'description' => 'Update application details and status.',
+        ],
+        'applications.delete' => [
+            'name' => 'Delete applications',
+            'description' => 'Soft delete application records.',
+        ],
     ],
 
     'roles' => [
@@ -136,6 +152,10 @@ return [
                 'candidate-resumes.upload',
                 'candidate-resumes.download',
                 'candidate-resumes.delete',
+                'applications.view',
+                'applications.create',
+                'applications.update',
+                'applications.delete',
             ],
         ],
         'recruiter' => [
@@ -151,6 +171,9 @@ return [
                 'candidates.edit',
                 'candidate-resumes.upload',
                 'candidate-resumes.download',
+                'applications.view',
+                'applications.create',
+                'applications.update',
             ],
         ],
         'interviewer' => [

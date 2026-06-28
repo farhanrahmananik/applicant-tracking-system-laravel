@@ -55,6 +55,16 @@ class Candidate extends Model
             ->orderByDesc('uploaded_at');
     }
 
+    /**
+     * @return HasMany<Application, $this>
+     */
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class)
+            ->latest('applied_date')
+            ->latest('id');
+    }
+
     public function getFullNameAttribute(): string
     {
         return trim($this->first_name.' '.($this->last_name ?? ''));
