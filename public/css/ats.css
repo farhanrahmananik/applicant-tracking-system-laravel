@@ -199,6 +199,7 @@ body {
 
 .app-frame {
     min-width: 0;
+    background: var(--ats-canvas);
 }
 
 .app-topbar {
@@ -222,8 +223,31 @@ body {
     font-size: 0.75rem;
 }
 
+.topbar-actions,
+.theme-control {
+    display: flex;
+    align-items: center;
+}
+
+.topbar-actions {
+    gap: 1rem;
+}
+
+.theme-control {
+    gap: 0.55rem;
+    color: var(--ats-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.theme-control .form-check-input {
+    margin: 0;
+    cursor: pointer;
+}
+
 .app-main {
-    width: min(100%, 76rem);
+    width: min(100%, 90rem);
     padding: 2rem;
 }
 
@@ -297,6 +321,362 @@ body {
     font-weight: 700;
 }
 
+.dashboard-page-header,
+.section-heading,
+.role-distribution-meta,
+.module-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.dashboard-date {
+    color: var(--ats-muted);
+    font-size: 0.825rem;
+    font-weight: 600;
+}
+
+.welcome-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 1.75rem;
+    padding: 1.5rem;
+    border: 1px solid var(--ats-border);
+    border-left: 4px solid var(--ats-accent);
+    border-radius: 8px;
+    background: var(--ats-surface);
+}
+
+.welcome-card h2 {
+    margin: 0.25rem 0 0.35rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.welcome-card p {
+    margin: 0;
+    color: var(--ats-muted);
+    font-size: 0.875rem;
+}
+
+.welcome-eyebrow,
+.welcome-access-label {
+    color: var(--ats-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.welcome-access {
+    min-width: 12rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--ats-border);
+}
+
+.welcome-access-label {
+    display: block;
+    margin-bottom: 0.45rem;
+}
+
+.dashboard-section {
+    margin-top: 2rem;
+}
+
+.section-heading {
+    margin-bottom: 1rem;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.section-heading p {
+    margin: 0.25rem 0 0;
+    color: var(--ats-muted);
+    font-size: 0.8rem;
+}
+
+.section-status {
+    padding: 0.25rem 0.55rem;
+    border: 1px solid var(--ats-border);
+    border-radius: 4px;
+    color: var(--ats-muted);
+    background: var(--ats-surface);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.85rem;
+}
+
+.metric-card {
+    min-width: 0;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--ats-border);
+    border-top: 3px solid var(--ats-accent);
+    border-radius: 6px;
+    background: var(--ats-surface);
+}
+
+.metric-card-active_users {
+    border-top-color: var(--ats-success);
+}
+
+.metric-card-inactive_users {
+    border-top-color: #d97706;
+}
+
+.metric-card-total_roles {
+    border-top-color: #6f42c1;
+}
+
+.metric-card-total_permissions {
+    border-top-color: #0f766e;
+}
+
+.metric-label,
+.metric-context {
+    color: var(--ats-muted);
+    font-size: 0.75rem;
+}
+
+.metric-label {
+    overflow-wrap: anywhere;
+    font-weight: 700;
+}
+
+.metric-value {
+    margin-block: 0.45rem 0.25rem;
+    font-size: 1.65rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.dashboard-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+    gap: 2rem;
+}
+
+.dashboard-table-wrap,
+.role-distribution-list {
+    border-top: 1px solid var(--ats-border);
+    border-bottom: 1px solid var(--ats-border);
+    background: var(--ats-surface);
+}
+
+.dashboard-table {
+    color: var(--ats-ink);
+    font-size: 0.8rem;
+}
+
+.dashboard-table > :not(caption) > * > * {
+    padding: 0.8rem 1rem;
+    border-color: var(--ats-border);
+    background: transparent;
+}
+
+.dashboard-table thead th {
+    color: var(--ats-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.user-cell {
+    display: flex;
+    min-width: 12rem;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.user-avatar {
+    flex: 0 0 auto;
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: 6px;
+    color: #174f87;
+    background: #dfeefa;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.user-cell-name,
+.user-cell-email {
+    display: block;
+}
+
+.user-cell-name {
+    font-weight: 700;
+}
+
+.user-cell-email {
+    max-width: 16rem;
+    overflow: hidden;
+    color: var(--ats-muted);
+    font-size: 0.72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table-role {
+    display: inline-block;
+    margin: 0.15rem 0.2rem 0.15rem 0;
+    color: var(--ats-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.status-pill {
+    display: inline-block;
+    padding: 0.2rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.status-pill-active {
+    color: #216e35;
+    background: #e5f5e9;
+}
+
+.status-pill-inactive {
+    color: #9a4b0b;
+    background: #fff1db;
+}
+
+.empty-table-state,
+.empty-section-state {
+    padding: 2rem;
+    color: var(--ats-muted);
+    font-size: 0.825rem;
+    text-align: center;
+}
+
+.role-distribution-list {
+    padding: 0.35rem 1.1rem;
+}
+
+.role-distribution-item {
+    padding-block: 0.85rem;
+}
+
+.role-distribution-item + .role-distribution-item {
+    border-top: 1px solid var(--ats-border);
+}
+
+.role-distribution-meta {
+    margin-bottom: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.role-distribution-meta span:last-child {
+    color: var(--ats-muted);
+}
+
+.role-progress {
+    height: 0.35rem;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--ats-canvas);
+}
+
+.role-progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--ats-accent);
+}
+
+.upcoming-section {
+    padding-bottom: 2rem;
+}
+
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+}
+
+.module-card {
+    min-width: 0;
+    min-height: 7.5rem;
+    padding: 1rem;
+    border: 1px solid var(--ats-border);
+    border-radius: 6px;
+    background: var(--ats-surface);
+}
+
+.module-card h3 {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.module-card-header span {
+    color: var(--ats-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.module-card p {
+    margin: 0.75rem 0 0;
+    color: var(--ats-muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+[data-bs-theme='dark'] .role-badge {
+    border-color: #315d88;
+    color: #a9d2f5;
+    background: #17324b;
+}
+
+[data-bs-theme='dark'] .user-avatar {
+    color: #b8dcfa;
+    background: #243f58;
+}
+
+[data-bs-theme='dark'] .status-pill-active {
+    color: #a9e8b7;
+    background: #20492d;
+}
+
+[data-bs-theme='dark'] .status-pill-inactive {
+    color: #f4c78c;
+    background: #523716;
+}
+
+@media (max-width: 1199.98px) {
+    .metric-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .dashboard-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .module-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 767.98px) {
     .app-shell {
         grid-template-columns: 1fr;
@@ -317,6 +697,38 @@ body {
 
     .app-main {
         padding: 1.5rem 1rem;
+    }
+
+    .app-user-email,
+    .theme-control > span:first-child {
+        display: none;
+    }
+
+    .topbar-actions {
+        gap: 0.65rem;
+    }
+
+    .dashboard-page-header,
+    .welcome-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .dashboard-date {
+        align-self: flex-start;
+    }
+
+    .welcome-access {
+        width: 100%;
+        min-width: 0;
+        padding: 1rem 0 0;
+        border-top: 1px solid var(--ats-border);
+        border-left: 0;
+    }
+
+    .metric-grid,
+    .module-grid {
+        grid-template-columns: 1fr;
     }
 
     .status-row {
