@@ -138,6 +138,50 @@
         <div class="interview-notes-copy">{{ $interview->notes ?? 'No scheduling notes have been added.' }}</div>
     </section>
 
+    @can('interview-feedback.view')
+        <section class="detail-section interview-feedback-section" aria-labelledby="interview-feedback-title">
+            <div class="section-heading interview-feedback-heading">
+                <div>
+                    <h2 id="interview-feedback-title">Interview feedback</h2>
+                    <p>Submitted assessments from the recruiting team.</p>
+                </div>
+                @can('interview-feedback.create')
+                    @if ($interview->status !== 'cancelled' && ! $interviewFeedback->contains('submitted_by_id', auth()->id()))
+                        <a class="btn btn-sm btn-primary" href="{{ route('interviews.feedback.create', $interview) }}">Submit feedback</a>
+                    @endif
+                @endcan
+            </div>
+
+            <div class="feedback-card-list">
+                @forelse ($interviewFeedback as $feedbackEntry)
+                    <article class="feedback-list-card">
+                        <div class="feedback-list-header">
+                            <div>
+                                <strong>{{ $feedbackEntry->submittedBy->name }}</strong>
+                                <span>{{ $feedbackEntry->submitted_at->format('M j, Y H:i') }}</span>
+                            </div>
+                            <div class="feedback-list-badges">
+                                <span class="feedback-recommendation feedback-recommendation-{{ $feedbackEntry->recommendation }}">
+                                    {{ Illuminate\Support\Str::headline($feedbackEntry->recommendation) }}
+                                </span>
+                                <span class="feedback-score-badge">{{ $feedbackEntry->rating }} / 5</span>
+                            </div>
+                        </div>
+                        <p>{{ $feedbackEntry->summary }}</p>
+                        <div class="feedback-list-actions">
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ route('interview-feedback.show', $feedbackEntry) }}">View</a>
+                            @can('interview-feedback.update')
+                                <a class="btn btn-sm btn-outline-secondary" href="{{ route('interview-feedback.edit', $feedbackEntry) }}">Edit</a>
+                            @endcan
+                        </div>
+                    </article>
+                @empty
+                    <div class="feedback-empty-state">No feedback has been submitted for this interview.</div>
+                @endforelse
+            </div>
+        </section>
+    @endcan
+
     <section class="detail-section job-audit-strip" aria-label="Record ownership">
         <div>
             <span>Created by</span>

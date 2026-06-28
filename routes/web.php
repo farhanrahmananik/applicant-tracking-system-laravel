@@ -7,6 +7,7 @@ use App\Http\Controllers\CandidateResumeController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\InterviewFeedbackController;
 use App\Http\Controllers\InterviewScheduleController;
 use App\Http\Controllers\JobPostingController;
 use Illuminate\Support\Facades\Route;
@@ -187,3 +188,30 @@ Route::middleware(['auth', 'active'])->prefix('interviews')->name('interviews.')
         ->middleware('permission:interviews.delete')
         ->name('destroy');
 });
+
+Route::middleware(['auth', 'active'])
+    ->prefix('interviews/{interview}/feedback')
+    ->name('interviews.feedback.')
+    ->group(function () {
+        Route::get('/create', [InterviewFeedbackController::class, 'create'])
+            ->middleware('permission:interview-feedback.create')
+            ->name('create');
+        Route::post('/', [InterviewFeedbackController::class, 'store'])
+            ->middleware('permission:interview-feedback.create')
+            ->name('store');
+    });
+
+Route::middleware(['auth', 'active'])
+    ->prefix('interview-feedback')
+    ->name('interview-feedback.')
+    ->group(function () {
+        Route::get('/{feedback}', [InterviewFeedbackController::class, 'show'])
+            ->middleware('permission:interview-feedback.view')
+            ->name('show');
+        Route::get('/{feedback}/edit', [InterviewFeedbackController::class, 'edit'])
+            ->middleware('permission:interview-feedback.update')
+            ->name('edit');
+        Route::put('/{feedback}', [InterviewFeedbackController::class, 'update'])
+            ->middleware('permission:interview-feedback.update')
+            ->name('update');
+    });

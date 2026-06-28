@@ -6,6 +6,7 @@ use Database\Factories\InterviewScheduleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InterviewSchedule extends Model
@@ -72,6 +73,16 @@ class InterviewSchedule extends Model
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by_id');
+    }
+
+    /**
+     * @return HasMany<InterviewFeedback, $this>
+     */
+    public function feedback(): HasMany
+    {
+        return $this->hasMany(InterviewFeedback::class)
+            ->latest('submitted_at')
+            ->latest('id');
     }
 
     /**

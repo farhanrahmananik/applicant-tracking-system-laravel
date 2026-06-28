@@ -56,8 +56,14 @@ class ApplicationController extends Controller
 
         if (Gate::allows('interviews.view')) {
             $application->loadCount('interviewSchedules');
+            $relations = ['interviewer:id,name,email'];
+
+            if (Gate::allows('interview-feedback.view')) {
+                $relations[] = 'feedback:id,interview_schedule_id,rating,recommendation,submitted_at';
+            }
+
             $applicationInterviews = $application->interviewSchedules()
-                ->with('interviewer:id,name,email')
+                ->with($relations)
                 ->limit(8)
                 ->get();
         }
