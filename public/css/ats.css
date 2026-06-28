@@ -1087,6 +1087,27 @@ body {
     background: #1d4943;
 }
 
+.department-mark {
+    color: #6a3f12;
+    background: #f7e6c8;
+}
+
+.resource-inline-link {
+    color: var(--ats-accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.resource-inline-link:hover {
+    color: var(--ats-accent-hover);
+    text-decoration: underline;
+}
+
+[data-bs-theme='dark'] .department-mark {
+    color: #f0cc9e;
+    background: #53391d;
+}
+
 @media (max-width: 991.98px) {
     .company-detail-grid {
         grid-template-columns: 1fr;

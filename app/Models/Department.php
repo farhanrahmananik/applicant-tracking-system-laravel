@@ -2,41 +2,34 @@
 
 namespace App\Models;
 
-use Database\Factories\CompanyFactory;
+use Database\Factories\DepartmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Company extends Model
+class Department extends Model
 {
-    /** @use HasFactory<CompanyFactory> */
+    /** @use HasFactory<DepartmentFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'company_id',
         'name',
         'slug',
         'email',
         'phone',
-        'website',
-        'address',
-        'city',
-        'country',
-        'is_active',
+        'location',
         'description',
+        'is_active',
     ];
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
     /**
-     * @return HasMany<Department, $this>
+     * @return BelongsTo<Company, $this>
      */
-    public function departments(): HasMany
+    public function company(): BelongsTo
     {
-        return $this->hasMany(Department::class);
+        return $this->belongsTo(Company::class)->withTrashed();
     }
 
     /**

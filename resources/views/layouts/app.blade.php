@@ -32,14 +32,27 @@
                     Dashboard
                 </a>
 
-                @can('companies.view')
+                @canany(['companies.view', 'departments.view'])
                     <div class="app-nav-label">Organization</div>
+                @endcanany
+
+                @can('companies.view')
                     <a
                         class="app-nav-link {{ request()->routeIs('companies.*') ? 'active' : '' }}"
                         href="{{ route('companies.index') }}"
                         @if (request()->routeIs('companies.*')) aria-current="page" @endif
                     >
                         Companies
+                    </a>
+                @endcan
+
+                @can('departments.view')
+                    <a
+                        class="app-nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}"
+                        href="{{ route('departments.index') }}"
+                        @if (request()->routeIs('departments.*')) aria-current="page" @endif
+                    >
+                        Departments
                     </a>
                 @endcan
             </nav>
