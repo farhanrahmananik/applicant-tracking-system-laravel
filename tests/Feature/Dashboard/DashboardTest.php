@@ -60,7 +60,7 @@ class DashboardTest extends TestCase
                     && $metrics['active_users']['value'] === 2
                     && $metrics['inactive_users']['value'] === 1
                     && $metrics['total_roles']['value'] === 5
-                    && $metrics['total_permissions']['value'] === 6;
+                    && $metrics['total_permissions']['value'] === 14;
             })
             ->assertViewHas('recentUsers', fn ($users): bool => $users->count() === 3)
             ->assertViewHas('roleDistribution', fn ($roles): bool => $roles->count() === 5)

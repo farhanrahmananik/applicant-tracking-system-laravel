@@ -26,6 +26,38 @@ return [
             'name' => 'View own candidate profile',
             'description' => 'View the authenticated candidate profile.',
         ],
+        'companies.view' => [
+            'name' => 'View companies',
+            'description' => 'View company records and details.',
+        ],
+        'companies.create' => [
+            'name' => 'Create companies',
+            'description' => 'Create company records.',
+        ],
+        'companies.update' => [
+            'name' => 'Update companies',
+            'description' => 'Update company records.',
+        ],
+        'companies.delete' => [
+            'name' => 'Delete companies',
+            'description' => 'Soft delete company records.',
+        ],
+        'departments.view' => [
+            'name' => 'View departments',
+            'description' => 'View department records and details.',
+        ],
+        'departments.create' => [
+            'name' => 'Create departments',
+            'description' => 'Create department records.',
+        ],
+        'departments.update' => [
+            'name' => 'Update departments',
+            'description' => 'Update department records.',
+        ],
+        'departments.delete' => [
+            'name' => 'Delete departments',
+            'description' => 'Soft delete department records.',
+        ],
     ],
 
     'roles' => [
@@ -41,6 +73,14 @@ return [
                 'access-dashboard',
                 'manage-users',
                 'view-audit-logs',
+                'companies.view',
+                'companies.create',
+                'companies.update',
+                'companies.delete',
+                'departments.view',
+                'departments.create',
+                'departments.update',
+                'departments.delete',
             ],
         ],
         'recruiter' => [
