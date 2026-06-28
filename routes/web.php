@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\CandidateResumeController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
@@ -120,3 +121,19 @@ Route::middleware(['auth', 'active'])->prefix('candidates')->name('candidates.')
         ->middleware('permission:candidates.delete')
         ->name('destroy');
 });
+
+Route::middleware(['auth', 'active'])
+    ->scopeBindings()
+    ->prefix('candidates/{candidate}/resumes')
+    ->name('candidates.resumes.')
+    ->group(function () {
+        Route::post('/', [CandidateResumeController::class, 'store'])
+            ->middleware('permission:candidate-resumes.upload')
+            ->name('store');
+        Route::get('/{resume}/download', [CandidateResumeController::class, 'download'])
+            ->middleware('permission:candidate-resumes.download')
+            ->name('download');
+        Route::delete('/{resume}', [CandidateResumeController::class, 'destroy'])
+            ->middleware('permission:candidate-resumes.delete')
+            ->name('destroy');
+    });

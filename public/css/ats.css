@@ -741,6 +741,151 @@ body {
     }
 }
 
+.candidate-resumes-section {
+    padding-bottom: 2rem;
+}
+
+.candidate-resumes-heading {
+    margin-bottom: 1rem;
+}
+
+.resume-upload-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: end;
+    gap: 1rem;
+    padding: 1rem;
+    border-top: 1px solid var(--ats-border);
+    border-bottom: 1px solid var(--ats-border);
+    background: var(--ats-surface);
+}
+
+.resume-upload-field {
+    min-width: 0;
+}
+
+.resume-upload-field .form-text {
+    color: var(--ats-muted);
+    font-size: 0.7rem;
+}
+
+.resume-primary-check {
+    min-height: 2.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    white-space: nowrap;
+}
+
+.resume-primary-check .form-check-input {
+    margin: 0;
+}
+
+.resume-list {
+    background: var(--ats-surface);
+}
+
+.resume-list-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--ats-border);
+}
+
+.resume-file-mark {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border-radius: 6px;
+    color: #8f2634;
+    background: #fbe7ea;
+    font-size: 0.62rem;
+    font-weight: 800;
+}
+
+.resume-file-info {
+    min-width: 0;
+}
+
+.resume-file-name {
+    overflow: hidden;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.resume-file-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.8rem;
+    margin-top: 0.3rem;
+    color: var(--ats-muted);
+    font-size: 0.68rem;
+}
+
+.resume-primary-badge {
+    margin-left: 0.35rem;
+    color: #155d54;
+    background: #d9f0ec;
+    vertical-align: middle;
+}
+
+.resume-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.resume-empty-state {
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--ats-border);
+    border-bottom: 1px solid var(--ats-border);
+    color: var(--ats-muted);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+[data-bs-theme='dark'] .resume-file-mark {
+    color: #f1b1ba;
+    background: #53262d;
+}
+
+[data-bs-theme='dark'] .resume-primary-badge {
+    color: #a8e3da;
+    background: #1d4943;
+}
+
+@media (max-width: 767.98px) {
+    .resume-upload-form,
+    .resume-list-item {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+    }
+
+    .resume-primary-check {
+        min-height: auto;
+    }
+
+    .resume-file-mark {
+        width: 100%;
+        height: 2rem;
+    }
+
+    .resume-actions .btn,
+    .resume-actions form {
+        flex: 1;
+    }
+
+    .resume-actions .btn,
+    .resume-actions form .btn {
+        width: 100%;
+    }
+}
+
 .candidate-filter-toolbar {
     display: grid;
     grid-template-columns: minmax(14rem, 1.5fr) repeat(5, minmax(8rem, 1fr)) auto auto;
