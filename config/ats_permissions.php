@@ -58,6 +58,22 @@ return [
             'name' => 'Delete departments',
             'description' => 'Soft delete department records.',
         ],
+        'job-postings.view' => [
+            'name' => 'View job postings',
+            'description' => 'View job posting records and details.',
+        ],
+        'job-postings.create' => [
+            'name' => 'Create job postings',
+            'description' => 'Create job posting records.',
+        ],
+        'job-postings.update' => [
+            'name' => 'Update job postings',
+            'description' => 'Update job posting records and status.',
+        ],
+        'job-postings.delete' => [
+            'name' => 'Delete job postings',
+            'description' => 'Soft delete job posting records.',
+        ],
     ],
 
     'roles' => [
@@ -81,17 +97,29 @@ return [
                 'departments.create',
                 'departments.update',
                 'departments.delete',
+                'job-postings.view',
+                'job-postings.create',
+                'job-postings.update',
+                'job-postings.delete',
             ],
         ],
         'recruiter' => [
             'name' => 'Recruiter',
             'description' => 'Access recruitment workflows.',
-            'permissions' => ['access-dashboard'],
+            'permissions' => [
+                'access-dashboard',
+                'job-postings.view',
+                'job-postings.create',
+                'job-postings.update',
+            ],
         ],
         'interviewer' => [
             'name' => 'Interviewer',
             'description' => 'Access assigned interview workflows.',
-            'permissions' => ['access-dashboard'],
+            'permissions' => [
+                'access-dashboard',
+                'job-postings.view',
+            ],
         ],
         'candidate' => [
             'name' => 'Candidate',

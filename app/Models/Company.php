@@ -40,6 +40,14 @@ class Company extends Model
     }
 
     /**
+     * @return HasMany<JobPosting, $this>
+     */
+    public function jobPostings(): HasMany
+    {
+        return $this->hasMany(JobPosting::class);
+    }
+
+    /**
      * @return array<string, string>
      */
     protected function casts(): array

@@ -1108,6 +1108,227 @@ body {
     background: #53391d;
 }
 
+.job-posting-form {
+    width: min(100%, 68rem);
+}
+
+.job-filter-toolbar {
+    display: grid;
+    grid-template-columns: minmax(14rem, 1.4fr) repeat(5, minmax(9rem, 1fr)) auto auto;
+}
+
+.job-filter-toolbar > div,
+.job-filter-toolbar .form-control,
+.job-filter-toolbar .form-select {
+    min-width: 0;
+    width: 100%;
+}
+
+.job-title-cell {
+    min-width: 14rem;
+}
+
+.job-title-cell a,
+.job-title-cell small {
+    display: block;
+}
+
+.job-title-cell a {
+    color: var(--ats-ink);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.job-title-cell a:hover {
+    color: var(--ats-accent);
+}
+
+.job-title-cell small {
+    margin-top: 0.2rem;
+    color: var(--ats-muted);
+    font-size: 0.7rem;
+}
+
+.job-badge {
+    display: inline-block;
+    padding: 0.22rem 0.48rem;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.job-status-draft,
+.job-badge-neutral {
+    color: #536170;
+    background: #e9edf1;
+}
+
+.job-status-open {
+    color: #216e35;
+    background: #e5f5e9;
+}
+
+.job-status-paused {
+    color: #9a4b0b;
+    background: #fff1db;
+}
+
+.job-status-closed {
+    color: #8f2634;
+    background: #fbe7ea;
+}
+
+.job-summary-card {
+    margin-top: 1.75rem;
+    padding: 1.4rem;
+    border: 1px solid var(--ats-border);
+    border-radius: 8px;
+    background: var(--ats-surface);
+}
+
+.job-summary-primary,
+.job-summary-metrics,
+.job-audit-strip {
+    display: flex;
+    align-items: center;
+}
+
+.job-summary-primary {
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--ats-border);
+}
+
+.job-summary-primary strong,
+.job-summary-primary span {
+    display: block;
+}
+
+.job-summary-primary div > span {
+    margin-top: 0.15rem;
+    color: var(--ats-muted);
+    font-size: 0.75rem;
+}
+
+.job-summary-metrics {
+    align-items: stretch;
+    padding-top: 1rem;
+}
+
+.job-summary-metrics > div {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 1rem;
+}
+
+.job-summary-metrics > div:first-child {
+    padding-left: 0;
+}
+
+.job-summary-metrics > div + div {
+    border-left: 1px solid var(--ats-border);
+}
+
+.job-summary-metrics span,
+.job-summary-metrics strong {
+    display: block;
+}
+
+.job-summary-metrics span,
+.job-audit-strip span {
+    margin-bottom: 0.3rem;
+    color: var(--ats-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.job-summary-metrics strong,
+.job-audit-strip strong {
+    overflow-wrap: anywhere;
+    font-size: 0.8rem;
+}
+
+.job-content-copy {
+    padding: 1rem;
+    border-top: 1px solid var(--ats-border);
+    border-bottom: 1px solid var(--ats-border);
+    color: var(--ats-ink);
+    background: var(--ats-surface);
+    font-size: 0.84rem;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.job-audit-strip {
+    align-items: stretch;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--ats-border);
+    border-bottom: 1px solid var(--ats-border);
+    background: var(--ats-surface);
+}
+
+.job-audit-strip > div {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.9rem 1rem;
+}
+
+.job-audit-strip > div + div {
+    border-left: 1px solid var(--ats-border);
+}
+
+[data-bs-theme='dark'] .job-status-draft,
+[data-bs-theme='dark'] .job-badge-neutral {
+    color: #c4ced8;
+    background: #33404d;
+}
+
+[data-bs-theme='dark'] .job-status-open {
+    color: #a9e8b7;
+    background: #20492d;
+}
+
+[data-bs-theme='dark'] .job-status-paused {
+    color: #f4c78c;
+    background: #523716;
+}
+
+[data-bs-theme='dark'] .job-status-closed {
+    color: #f1b1ba;
+    background: #53262d;
+}
+
+@media (max-width: 1399.98px) {
+    .job-filter-toolbar {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .job-filter-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .job-summary-metrics,
+    .job-audit-strip {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .job-summary-metrics > div,
+    .job-summary-metrics > div:first-child {
+        padding: 0.75rem 0;
+    }
+
+    .job-summary-metrics > div + div,
+    .job-audit-strip > div + div {
+        border-top: 1px solid var(--ats-border);
+        border-left: 0;
+    }
+}
+
 @media (max-width: 991.98px) {
     .company-detail-grid {
         grid-template-columns: 1fr;

@@ -55,6 +55,17 @@
                         Departments
                     </a>
                 @endcan
+
+                @can('job-postings.view')
+                    <div class="app-nav-label">Recruitment</div>
+                    <a
+                        class="app-nav-link {{ request()->routeIs('job-postings.*') ? 'active' : '' }}"
+                        href="{{ route('job-postings.index') }}"
+                        @if (request()->routeIs('job-postings.*')) aria-current="page" @endif
+                    >
+                        Job Postings
+                    </a>
+                @endcan
             </nav>
         </aside>
 
@@ -97,5 +108,6 @@
             </main>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html>
