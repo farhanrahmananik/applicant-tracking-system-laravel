@@ -173,6 +173,27 @@
         @endif
     @endforeach
 
+    @can('applications.view')
+        <section class="detail-section related-applications-section" aria-labelledby="job-applications-title">
+            <div class="section-heading related-applications-heading">
+                <div>
+                    <h2 id="job-applications-title">Applications</h2>
+                    <p>Candidates connected to this job posting.</p>
+                </div>
+                <div class="related-applications-actions">
+                    <span class="section-status">{{ $jobPosting->applications_count }} total</span>
+                    @can('applications.create')
+                        <a class="btn btn-sm btn-primary" href="{{ route('applications.create', ['job_posting_id' => $jobPosting->id]) }}">Create application</a>
+                    @endcan
+                </div>
+            </div>
+            @include('applications._related-table', [
+                'applications' => $jobApplications,
+                'context' => 'job',
+            ])
+        </section>
+    @endcan
+
     <section class="detail-section job-audit-strip" aria-label="Record ownership">
         <div>
             <span>Created by</span>

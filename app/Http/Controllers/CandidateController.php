@@ -8,6 +8,7 @@ use App\Models\Candidate;
 use App\Services\CandidateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class CandidateController extends Controller
@@ -50,7 +51,17 @@ class CandidateController extends Controller
     {
         $candidate->load('resumes.uploadedBy:id,name');
 
-        return view('candidates.show', compact('candidate'));
+        $candidateApplications = collect();
+
+        if (Gate::allows('applications.view')) {
+            $candidate->loadCount('applications');
+            $candidateApplications = $candidate->applications()
+                ->with(['jobPosting:id,company_id,title,status,deleted_at', 'jobPosting.company:id,name,deleted_at'])
+                ->limit(8)
+                ->get();
+        }
+
+        return view('candidates.show', compact('candidate', 'candidateApplications'));
     }
 
     public function edit(Candidate $candidate): View

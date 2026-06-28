@@ -8,6 +8,7 @@ use App\Models\JobPosting;
 use App\Services\JobPostingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class JobPostingController extends Controller
@@ -53,7 +54,17 @@ class JobPostingController extends Controller
     {
         $jobPosting->load(['company', 'department', 'createdBy', 'updatedBy']);
 
-        return view('job-postings.show', compact('jobPosting'));
+        $jobApplications = collect();
+
+        if (Gate::allows('applications.view')) {
+            $jobPosting->loadCount('applications');
+            $jobApplications = $jobPosting->applications()
+                ->with('candidate:id,first_name,last_name,email,deleted_at')
+                ->limit(8)
+                ->get();
+        }
+
+        return view('job-postings.show', compact('jobPosting', 'jobApplications'));
     }
 
     public function edit(JobPosting $jobPosting): View
