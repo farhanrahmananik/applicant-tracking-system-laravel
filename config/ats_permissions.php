@@ -74,6 +74,22 @@ return [
             'name' => 'Delete job postings',
             'description' => 'Soft delete job posting records.',
         ],
+        'candidates.view' => [
+            'name' => 'View candidates',
+            'description' => 'View candidate records and profiles.',
+        ],
+        'candidates.create' => [
+            'name' => 'Create candidates',
+            'description' => 'Create candidate records.',
+        ],
+        'candidates.edit' => [
+            'name' => 'Edit candidates',
+            'description' => 'Update candidate records.',
+        ],
+        'candidates.delete' => [
+            'name' => 'Delete candidates',
+            'description' => 'Soft delete candidate records.',
+        ],
     ],
 
     'roles' => [
@@ -101,6 +117,10 @@ return [
                 'job-postings.create',
                 'job-postings.update',
                 'job-postings.delete',
+                'candidates.view',
+                'candidates.create',
+                'candidates.edit',
+                'candidates.delete',
             ],
         ],
         'recruiter' => [
@@ -111,6 +131,9 @@ return [
                 'job-postings.view',
                 'job-postings.create',
                 'job-postings.update',
+                'candidates.view',
+                'candidates.create',
+                'candidates.edit',
             ],
         ],
         'interviewer' => [
