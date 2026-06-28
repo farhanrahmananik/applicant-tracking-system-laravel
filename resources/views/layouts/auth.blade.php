@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <title>@yield('title', 'Sign in') | {{ config('app.name') }}</title>
+    <script src="{{ asset('js/ats-theme.js') }}"></script>
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"

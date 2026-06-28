@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\Role;
 use App\Models\User;
+use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
@@ -98,7 +100,12 @@ class AuthenticationTest extends TestCase
 
     public function test_authenticated_active_user_can_access_dashboard(): void
     {
+        $this->seed(RolePermissionSeeder::class);
+
         $user = User::factory()->create();
+        $user->roles()->sync([
+            Role::query()->where('slug', 'recruiter')->value('id'),
+        ]);
 
         $this->actingAs($user)
             ->get(route('dashboard'))
