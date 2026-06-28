@@ -120,4 +120,96 @@
         </div>
         <div class="candidate-skills-copy">{{ $candidate->skills ?? 'No skills have been added.' }}</div>
     </section>
+
+    <section class="detail-section candidate-resumes-section" aria-labelledby="candidate-resumes-title">
+        <div class="section-heading candidate-resumes-heading">
+            <div>
+                <h2 id="candidate-resumes-title">Resumes and CVs</h2>
+                <p>Private candidate documents available to authorized ATS users.</p>
+            </div>
+            <span class="section-status">{{ $candidate->resumes->count() }} files</span>
+        </div>
+
+        @can('candidate-resumes.upload')
+            <form
+                class="resume-upload-form"
+                method="POST"
+                action="{{ route('candidates.resumes.store', $candidate) }}"
+                enctype="multipart/form-data"
+            >
+                @csrf
+                <div class="resume-upload-field">
+                    <label class="form-label" for="resume">Resume file</label>
+                    <input
+                        class="form-control @error('resume') is-invalid @enderror"
+                        id="resume"
+                        name="resume"
+                        type="file"
+                        accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        required
+                    >
+                    @error('resume')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <div class="form-text">PDF, DOC, or DOCX. Maximum file size 10 MB.</div>
+                </div>
+                <div class="form-check resume-primary-check">
+                    <input type="hidden" name="is_primary" value="0">
+                    <input class="form-check-input" id="is_primary" name="is_primary" type="checkbox" value="1">
+                    <label class="form-check-label" for="is_primary">Set as primary</label>
+                </div>
+                <button class="btn btn-primary" type="submit">Upload resume</button>
+            </form>
+        @endcan
+
+        <div class="resume-list">
+            @forelse ($candidate->resumes as $resume)
+                @php
+                    $size = $resume->size_bytes >= 1048576
+                        ? number_format($resume->size_bytes / 1048576, 1).' MB'
+                        : number_format($resume->size_bytes / 1024, 1).' KB';
+                @endphp
+                <article class="resume-list-item">
+                    <div class="resume-file-mark" aria-hidden="true">{{ strtoupper($resume->extension) }}</div>
+                    <div class="resume-file-info">
+                        <div class="resume-file-name">
+                            {{ $resume->original_name }}
+                            @if ($resume->is_primary)
+                                <span class="candidate-badge resume-primary-badge">Primary</span>
+                            @endif
+                        </div>
+                        <div class="resume-file-meta">
+                            <span>{{ strtoupper($resume->extension) }}</span>
+                            <span>{{ $size }}</span>
+                            <span>{{ $resume->uploaded_at->format('M j, Y H:i') }}</span>
+                            <span>Uploaded by {{ $resume->uploadedBy?->name ?? 'System' }}</span>
+                        </div>
+                    </div>
+                    <div class="resume-actions">
+                        @can('candidate-resumes.download')
+                            <a
+                                class="btn btn-sm btn-outline-secondary"
+                                href="{{ route('candidates.resumes.download', [$candidate, $resume]) }}"
+                            >
+                                Download
+                            </a>
+                        @endcan
+                        @can('candidate-resumes.delete')
+                            <form
+                                method="POST"
+                                action="{{ route('candidates.resumes.destroy', [$candidate, $resume]) }}"
+                                onsubmit="return confirm('Delete this resume? The private file will also be removed.')"
+                            >
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                            </form>
+                        @endcan
+                    </div>
+                </article>
+            @empty
+                <div class="resume-empty-state">No resumes or CVs have been uploaded.</div>
+            @endforelse
+        </div>
+    </section>
 @endsection

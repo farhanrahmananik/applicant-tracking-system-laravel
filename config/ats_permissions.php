@@ -90,6 +90,18 @@ return [
             'name' => 'Delete candidates',
             'description' => 'Soft delete candidate records.',
         ],
+        'candidate-resumes.upload' => [
+            'name' => 'Upload candidate resumes',
+            'description' => 'Upload private resume files for candidate records.',
+        ],
+        'candidate-resumes.download' => [
+            'name' => 'Download candidate resumes',
+            'description' => 'Download authorized candidate resume files.',
+        ],
+        'candidate-resumes.delete' => [
+            'name' => 'Delete candidate resumes',
+            'description' => 'Soft delete candidate resume records and stored files.',
+        ],
     ],
 
     'roles' => [
@@ -121,6 +133,9 @@ return [
                 'candidates.create',
                 'candidates.edit',
                 'candidates.delete',
+                'candidate-resumes.upload',
+                'candidate-resumes.download',
+                'candidate-resumes.delete',
             ],
         ],
         'recruiter' => [
@@ -134,6 +149,8 @@ return [
                 'candidates.view',
                 'candidates.create',
                 'candidates.edit',
+                'candidate-resumes.upload',
+                'candidate-resumes.download',
             ],
         ],
         'interviewer' => [

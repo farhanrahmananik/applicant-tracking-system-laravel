@@ -48,6 +48,8 @@ class CandidateController extends Controller
 
     public function show(Candidate $candidate): View
     {
+        $candidate->load('resumes.uploadedBy:id,name');
+
         return view('candidates.show', compact('candidate'));
     }
 

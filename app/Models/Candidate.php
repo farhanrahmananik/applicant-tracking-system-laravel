@@ -6,6 +6,7 @@ use Database\Factories\CandidateFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Candidate extends Model
@@ -42,6 +43,16 @@ class Candidate extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return HasMany<CandidateResume, $this>
+     */
+    public function resumes(): HasMany
+    {
+        return $this->hasMany(CandidateResume::class)
+            ->orderByDesc('is_primary')
+            ->orderByDesc('uploaded_at');
     }
 
     public function getFullNameAttribute(): string
