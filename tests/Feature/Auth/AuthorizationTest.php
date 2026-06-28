@@ -21,10 +21,10 @@ class AuthorizationTest extends TestCase
         $this->seed(DatabaseSeeder::class);
 
         $this->assertDatabaseCount('roles', 5);
-        $this->assertDatabaseCount('permissions', 6);
+        $this->assertDatabaseCount('permissions', 10);
         $this->assertDatabaseCount('users', 5);
         $this->assertDatabaseCount('role_user', 5);
-        $this->assertDatabaseCount('permission_role', 12);
+        $this->assertDatabaseCount('permission_role', 20);
         $this->assertTrue(User::query()->where('email', 'superadmin@ats.test')->firstOrFail()->isSuperAdmin());
     }
 

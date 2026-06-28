@@ -31,6 +31,17 @@
                 >
                     Dashboard
                 </a>
+
+                @can('companies.view')
+                    <div class="app-nav-label">Organization</div>
+                    <a
+                        class="app-nav-link {{ request()->routeIs('companies.*') ? 'active' : '' }}"
+                        href="{{ route('companies.index') }}"
+                        @if (request()->routeIs('companies.*')) aria-current="page" @endif
+                    >
+                        Companies
+                    </a>
+                @endcan
             </nav>
         </aside>
 
@@ -63,6 +74,12 @@
             </header>
 
             <main class="app-main">
+                @if (session('success'))
+                    <div class="alert alert-success app-alert" role="status">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 @yield('content')
             </main>
         </div>
