@@ -12,6 +12,7 @@ use App\Http\Controllers\InterviewFeedbackController;
 use App\Http\Controllers\InterviewScheduleController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -223,6 +224,29 @@ Route::middleware(['auth', 'active'])->prefix('interviews')->name('interviews.')
         ->middleware('permission:interviews.delete')
         ->name('destroy');
 });
+
+Route::middleware(['auth', 'active', 'permission:reports.view'])
+    ->prefix('reports')
+    ->name('reports.')
+    ->group(function () {
+        Route::get('/', [ReportController::class, 'index'])->name('index');
+        Route::get('/applications', [ReportController::class, 'applications'])->name('applications');
+        Route::get('/applications/export', [ReportController::class, 'exportApplications'])
+            ->name('applications.export');
+        Route::get('/candidates', [ReportController::class, 'candidates'])->name('candidates');
+        Route::get('/job-postings', [ReportController::class, 'jobPostings'])->name('job-postings');
+        Route::get('/job-postings/export', [ReportController::class, 'exportJobPostings'])
+            ->name('job-postings.export');
+        Route::get('/interviews', [ReportController::class, 'interviews'])->name('interviews');
+        Route::get('/interviews/export', [ReportController::class, 'exportInterviews'])
+            ->name('interviews.export');
+        Route::get('/pipeline', [ReportController::class, 'pipeline'])->name('pipeline');
+        Route::get('/pipeline/export', [ReportController::class, 'exportPipeline'])
+            ->name('pipeline.export');
+        Route::get('/offers', [ReportController::class, 'offers'])->name('offers');
+        Route::get('/offers/export', [ReportController::class, 'exportOffers'])
+            ->name('offers.export');
+    });
 
 Route::middleware(['auth', 'active'])
     ->prefix('interviews/{interview}/feedback')

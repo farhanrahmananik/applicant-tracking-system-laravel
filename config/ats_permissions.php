@@ -166,6 +166,10 @@ return [
             'name' => 'Update offers',
             'description' => 'Update draft offers and manage offer status transitions.',
         ],
+        'reports.view' => [
+            'name' => 'View recruitment reports',
+            'description' => 'View and export recruitment workflow reports.',
+        ],
     ],
 
     'roles' => [
@@ -216,6 +220,7 @@ return [
                 'offers.view',
                 'offers.create',
                 'offers.update',
+                'reports.view',
             ],
         ],
         'recruiter' => [
@@ -245,6 +250,7 @@ return [
                 'offers.view',
                 'offers.create',
                 'offers.update',
+                'reports.view',
             ],
         ],
         'interviewer' => [
