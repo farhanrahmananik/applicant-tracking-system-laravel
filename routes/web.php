@@ -7,6 +7,7 @@ use App\Http\Controllers\CandidateResumeController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\HiringPipelineController;
 use App\Http\Controllers\InterviewFeedbackController;
 use App\Http\Controllers\InterviewScheduleController;
 use App\Http\Controllers\JobPostingController;
@@ -163,6 +164,15 @@ Route::middleware(['auth', 'active'])->prefix('applications')->name('application
     Route::delete('/{application}', [ApplicationController::class, 'destroy'])
         ->middleware('permission:applications.delete')
         ->name('destroy');
+});
+
+Route::middleware(['auth', 'active'])->group(function () {
+    Route::get('/pipeline', [HiringPipelineController::class, 'index'])
+        ->middleware('permission:pipeline.view')
+        ->name('pipeline.index');
+    Route::post('/applications/{application}/stage', [HiringPipelineController::class, 'transition'])
+        ->middleware('permission:pipeline.manage')
+        ->name('pipeline.transition');
 });
 
 Route::middleware(['auth', 'active'])->prefix('interviews')->name('interviews.')->group(function () {

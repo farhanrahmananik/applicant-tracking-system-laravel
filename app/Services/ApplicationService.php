@@ -13,6 +13,10 @@ use Illuminate\Validation\ValidationException;
 
 class ApplicationService
 {
+    public function __construct(
+        private readonly HiringPipelineService $hiringPipelineService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $filters
      * @return LengthAwarePaginator<Application>
@@ -127,8 +131,16 @@ class ApplicationService
             $this->lockCandidateAndJobPosting($data);
             $this->ensureNoDuplicateActiveApplication($data, $application);
 
+            $nextStage = $data['current_status'];
+            $stageChanged = $application->current_status !== $nextStage;
+            unset($data['current_status']);
+
             $data['updated_by_id'] = Auth::id();
             $application->update($data);
+
+            if ($stageChanged) {
+                $application = $this->hiringPipelineService->transition($application, $nextStage);
+            }
 
             return $application->refresh()->load([
                 'candidate',

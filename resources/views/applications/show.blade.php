@@ -39,7 +39,7 @@
 
     <section class="application-summary-card" aria-label="Application summary">
         <div>
-            <span>Status</span>
+            <span>Pipeline stage</span>
             <strong class="application-badge application-status-{{ $application->current_status }}">
                 {{ Illuminate\Support\Str::headline($application->current_status) }}
             </strong>
@@ -57,6 +57,84 @@
             <strong>{{ $application->updated_at->format('M j, Y H:i') }}</strong>
         </div>
     </section>
+
+    @can('pipeline.view')
+        <div class="pipeline-detail-grid">
+            <section class="detail-section pipeline-move-section" aria-labelledby="pipeline-move-title">
+                <div class="section-heading">
+                    <div>
+                        <h2 id="pipeline-move-title">Move application</h2>
+                        <p>Advance this application through an allowed workflow transition.</p>
+                    </div>
+                </div>
+
+                @can('pipeline.manage')
+                    @if ($pipelineTransitions !== [])
+                        <form class="pipeline-transition-form" method="POST" action="{{ route('pipeline.transition', $application) }}">
+                            @csrf
+                            <div>
+                                <label class="form-label" for="to_stage">Next stage</label>
+                                <select class="form-select @error('to_stage') is-invalid @enderror" id="to_stage" name="to_stage" required>
+                                    <option value="">Select stage</option>
+                                    @foreach ($pipelineTransitions as $nextStage)
+                                        <option value="{{ $nextStage }}" @selected(old('to_stage') === $nextStage)>
+                                            {{ Illuminate\Support\Str::headline($nextStage) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('to_stage')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="form-label" for="note">Reason or note</label>
+                                <textarea
+                                    class="form-control @error('note') is-invalid @enderror"
+                                    id="note"
+                                    name="note"
+                                    rows="3"
+                                    maxlength="500"
+                                    placeholder="Optional context for this stage change"
+                                >{{ old('note') }}</textarea>
+                                @error('note')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <button class="btn btn-primary" type="submit">Update stage</button>
+                        </form>
+                    @else
+                        <div class="pipeline-terminal-state">This application is in a terminal pipeline stage.</div>
+                    @endif
+                @endcan
+            </section>
+
+            <section class="detail-section pipeline-history-section" aria-labelledby="pipeline-history-title">
+                <div class="section-heading">
+                    <div>
+                        <h2 id="pipeline-history-title">Stage history</h2>
+                        <p>Recorded transitions for this application.</p>
+                    </div>
+                </div>
+                <div class="pipeline-history-list">
+                    @forelse ($stageHistories as $history)
+                        <article class="pipeline-history-item">
+                            <span class="pipeline-history-dot" aria-hidden="true"></span>
+                            <div>
+                                <div class="pipeline-history-stages">
+                                    <span>{{ Illuminate\Support\Str::headline($history->from_stage) }}</span>
+                                    <strong>{{ Illuminate\Support\Str::headline($history->to_stage) }}</strong>
+                                </div>
+                                <p>{{ $history->note ?? 'No transition note provided.' }}</p>
+                                <small>{{ $history->changedBy?->name ?? 'System' }} - {{ $history->changed_at->format('M j, Y H:i') }}</small>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="pipeline-history-empty">No stage changes have been recorded.</div>
+                    @endforelse
+                </div>
+            </section>
+        </div>
+    @endcan
 
     <div class="company-detail-grid">
         <section class="detail-section" aria-labelledby="application-candidate-title">

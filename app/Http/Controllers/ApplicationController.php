@@ -6,6 +6,7 @@ use App\Http\Requests\Application\StoreApplicationRequest;
 use App\Http\Requests\Application\UpdateApplicationRequest;
 use App\Models\Application;
 use App\Services\ApplicationService;
+use App\Services\HiringPipelineService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -15,6 +16,7 @@ class ApplicationController extends Controller
 {
     public function __construct(
         private readonly ApplicationService $applicationService,
+        private readonly HiringPipelineService $hiringPipelineService,
     ) {}
 
     public function index(Request $request): View
@@ -53,6 +55,18 @@ class ApplicationController extends Controller
         $application->load(['candidate', 'jobPosting.company', 'jobPosting.department', 'createdBy', 'updatedBy']);
 
         $applicationInterviews = collect();
+        $stageHistories = collect();
+        $pipelineTransitions = [];
+
+        if (Gate::allows('pipeline.view')) {
+            $stageHistories = $application->stageHistories()
+                ->with('changedBy:id,name')
+                ->limit(20)
+                ->get();
+            $pipelineTransitions = $this->hiringPipelineService->allowedTransitions(
+                $application->current_status,
+            );
+        }
 
         if (Gate::allows('interviews.view')) {
             $application->loadCount('interviewSchedules');
@@ -68,7 +82,12 @@ class ApplicationController extends Controller
                 ->get();
         }
 
-        return view('applications.show', compact('application', 'applicationInterviews'));
+        return view('applications.show', compact(
+            'application',
+            'applicationInterviews',
+            'stageHistories',
+            'pipelineTransitions',
+        ));
     }
 
     public function edit(Application $application): View
@@ -77,6 +96,9 @@ class ApplicationController extends Controller
             'application' => $application->load(['candidate', 'jobPosting']),
             'candidates' => $this->applicationService->candidateOptions(),
             'jobPostings' => $this->applicationService->jobPostingOptions(),
+            'pipelineTransitions' => $this->hiringPipelineService->allowedTransitions(
+                $application->current_status,
+            ),
         ]);
     }
 

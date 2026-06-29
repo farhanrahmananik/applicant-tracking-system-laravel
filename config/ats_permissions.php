@@ -146,6 +146,14 @@ return [
             'name' => 'Update interview feedback',
             'description' => 'Update submitted interview feedback.',
         ],
+        'pipeline.view' => [
+            'name' => 'View hiring pipeline',
+            'description' => 'View applications grouped by hiring pipeline stage.',
+        ],
+        'pipeline.manage' => [
+            'name' => 'Manage hiring pipeline',
+            'description' => 'Move applications through valid hiring pipeline stages.',
+        ],
     ],
 
     'roles' => [
@@ -191,6 +199,8 @@ return [
                 'interview-feedback.view',
                 'interview-feedback.create',
                 'interview-feedback.update',
+                'pipeline.view',
+                'pipeline.manage',
             ],
         ],
         'recruiter' => [
@@ -215,6 +225,8 @@ return [
                 'interview-feedback.view',
                 'interview-feedback.create',
                 'interview-feedback.update',
+                'pipeline.view',
+                'pipeline.manage',
             ],
         ],
         'interviewer' => [
