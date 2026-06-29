@@ -120,6 +120,17 @@
                         Interviews
                     </a>
                 @endcan
+
+                @can('reports.view')
+                    <div class="app-nav-label">Insights</div>
+                    <a
+                        class="app-nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}"
+                        href="{{ route('reports.index') }}"
+                        @if (request()->routeIs('reports.*')) aria-current="page" @endif
+                    >
+                        Reports
+                    </a>
+                @endcan
             </nav>
         </aside>
 
