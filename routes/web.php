@@ -11,6 +11,7 @@ use App\Http\Controllers\HiringPipelineController;
 use App\Http\Controllers\InterviewFeedbackController;
 use App\Http\Controllers\InterviewScheduleController;
 use App\Http\Controllers\JobPostingController;
+use App\Http\Controllers\OfferController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -173,6 +174,30 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::post('/applications/{application}/stage', [HiringPipelineController::class, 'transition'])
         ->middleware('permission:pipeline.manage')
         ->name('pipeline.transition');
+});
+
+Route::middleware(['auth', 'active'])->prefix('offers')->name('offers.')->group(function () {
+    Route::get('/', [OfferController::class, 'index'])
+        ->middleware('permission:offers.view')
+        ->name('index');
+    Route::get('/create', [OfferController::class, 'create'])
+        ->middleware('permission:offers.create')
+        ->name('create');
+    Route::post('/', [OfferController::class, 'store'])
+        ->middleware('permission:offers.create')
+        ->name('store');
+    Route::get('/{offer}', [OfferController::class, 'show'])
+        ->middleware('permission:offers.view')
+        ->name('show');
+    Route::get('/{offer}/edit', [OfferController::class, 'edit'])
+        ->middleware('permission:offers.update')
+        ->name('edit');
+    Route::put('/{offer}', [OfferController::class, 'update'])
+        ->middleware('permission:offers.update')
+        ->name('update');
+    Route::post('/{offer}/status', [OfferController::class, 'transition'])
+        ->middleware('permission:offers.update')
+        ->name('transition');
 });
 
 Route::middleware(['auth', 'active'])->prefix('interviews')->name('interviews.')->group(function () {

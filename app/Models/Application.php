@@ -102,6 +102,16 @@ class Application extends Model
             ->latest('id');
     }
 
+    /**
+     * @return HasMany<Offer, $this>
+     */
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class)
+            ->latest('created_at')
+            ->latest('id');
+    }
+
     public function isActive(): bool
     {
         return in_array($this->current_status, self::ACTIVE_STATUSES, true);

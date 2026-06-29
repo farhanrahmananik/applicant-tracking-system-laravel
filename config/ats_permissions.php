@@ -154,6 +154,18 @@ return [
             'name' => 'Manage hiring pipeline',
             'description' => 'Move applications through valid hiring pipeline stages.',
         ],
+        'offers.view' => [
+            'name' => 'View offers',
+            'description' => 'View employment offers and status history.',
+        ],
+        'offers.create' => [
+            'name' => 'Create offers',
+            'description' => 'Create employment offers for selected applications.',
+        ],
+        'offers.update' => [
+            'name' => 'Update offers',
+            'description' => 'Update draft offers and manage offer status transitions.',
+        ],
     ],
 
     'roles' => [
@@ -201,6 +213,9 @@ return [
                 'interview-feedback.update',
                 'pipeline.view',
                 'pipeline.manage',
+                'offers.view',
+                'offers.create',
+                'offers.update',
             ],
         ],
         'recruiter' => [
@@ -227,6 +242,9 @@ return [
                 'interview-feedback.update',
                 'pipeline.view',
                 'pipeline.manage',
+                'offers.view',
+                'offers.create',
+                'offers.update',
             ],
         ],
         'interviewer' => [
