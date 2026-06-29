@@ -56,7 +56,7 @@
                     </a>
                 @endcan
 
-                @canany(['job-postings.view', 'candidates.view', 'applications.view', 'interviews.view', 'pipeline.view'])
+                @canany(['job-postings.view', 'candidates.view', 'applications.view', 'interviews.view', 'pipeline.view', 'offers.view'])
                     <div class="app-nav-label">Recruitment</div>
                 @endcanany
 
@@ -98,6 +98,16 @@
                         @if (request()->routeIs('pipeline.*')) aria-current="page" @endif
                     >
                         Hiring Pipeline
+                    </a>
+                @endcan
+
+                @can('offers.view')
+                    <a
+                        class="app-nav-link {{ request()->routeIs('offers.*') ? 'active' : '' }}"
+                        href="{{ route('offers.index') }}"
+                        @if (request()->routeIs('offers.*')) aria-current="page" @endif
+                    >
+                        Offers
                     </a>
                 @endcan
 

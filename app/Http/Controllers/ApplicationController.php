@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Application\StoreApplicationRequest;
 use App\Http\Requests\Application\UpdateApplicationRequest;
 use App\Models\Application;
+use App\Models\Offer;
 use App\Services\ApplicationService;
 use App\Services\HiringPipelineService;
 use Illuminate\Http\RedirectResponse;
@@ -57,6 +58,8 @@ class ApplicationController extends Controller
         $applicationInterviews = collect();
         $stageHistories = collect();
         $pipelineTransitions = [];
+        $applicationOffers = collect();
+        $applicationHasBlockingOffer = false;
 
         if (Gate::allows('pipeline.view')) {
             $stageHistories = $application->stageHistories()
@@ -82,11 +85,24 @@ class ApplicationController extends Controller
                 ->get();
         }
 
+        if (Gate::allows('offers.view')) {
+            $application->loadCount('offers');
+            $applicationHasBlockingOffer = $application->offers()
+                ->whereIn('status', Offer::BLOCKING_STATUSES)
+                ->exists();
+            $applicationOffers = $application->offers()
+                ->with(['createdBy:id,name'])
+                ->limit(8)
+                ->get();
+        }
+
         return view('applications.show', compact(
             'application',
             'applicationInterviews',
             'stageHistories',
             'pipelineTransitions',
+            'applicationOffers',
+            'applicationHasBlockingOffer',
         ));
     }
 

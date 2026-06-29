@@ -136,6 +136,66 @@
         </div>
     @endcan
 
+    @can('offers.view')
+        <section class="detail-section application-offers-section" aria-labelledby="application-offers-title">
+            <div class="section-heading application-offers-heading">
+                <div>
+                    <h2 id="application-offers-title">Offers</h2>
+                    <p>Employment offers connected to this application.</p>
+                </div>
+                <div class="application-offers-actions">
+                    <span class="section-status">{{ $application->offers_count }} total</span>
+                    @can('offers.create')
+                        @if (
+                            $application->current_status === 'selected'
+                            && ! $applicationHasBlockingOffer
+                        )
+                            <a class="btn btn-sm btn-primary" href="{{ route('offers.create', ['application_id' => $application->id]) }}">Create offer</a>
+                        @endif
+                    @endcan
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table related-offer-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Offer</th>
+                            <th scope="col">Compensation</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Expiry</th>
+                            <th class="text-end" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($applicationOffers as $relatedOffer)
+                            <tr>
+                                <td>
+                                    <span class="table-primary-value">{{ $relatedOffer->offer_title }}</span>
+                                    <small>{{ Illuminate\Support\Str::headline($relatedOffer->employment_type) }}</small>
+                                </td>
+                                <td>{{ $relatedOffer->currency }} {{ number_format((float) $relatedOffer->salary_amount, 2) }}</td>
+                                <td>
+                                    <span class="offer-badge offer-status-{{ $relatedOffer->status }}">
+                                        {{ Illuminate\Support\Str::headline($relatedOffer->status) }}
+                                    </span>
+                                </td>
+                                <td class="text-nowrap">{{ $relatedOffer->expiry_date->format('M j, Y') }}</td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('offers.show', $relatedOffer) }}">View</a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td class="empty-table-state" colspan="5">No offers have been created.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    @endcan
+
     <div class="company-detail-grid">
         <section class="detail-section" aria-labelledby="application-candidate-title">
             <div class="section-heading">
