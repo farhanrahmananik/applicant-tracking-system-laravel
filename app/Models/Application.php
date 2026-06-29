@@ -14,18 +14,24 @@ class Application extends Model
     /** @use HasFactory<ApplicationFactory> */
     use HasFactory, SoftDeletes;
 
-    public const STATUSES = [
+    public const PIPELINE_STAGES = [
         'applied',
         'screening',
         'shortlisted',
+        'interview',
+        'selected',
         'rejected',
         'withdrawn',
     ];
+
+    public const STATUSES = self::PIPELINE_STAGES;
 
     public const ACTIVE_STATUSES = [
         'applied',
         'screening',
         'shortlisted',
+        'interview',
+        'selected',
     ];
 
     public const TERMINAL_STATUSES = [
@@ -83,6 +89,16 @@ class Application extends Model
     {
         return $this->hasMany(InterviewSchedule::class)
             ->latest('scheduled_at')
+            ->latest('id');
+    }
+
+    /**
+     * @return HasMany<ApplicationStageHistory, $this>
+     */
+    public function stageHistories(): HasMany
+    {
+        return $this->hasMany(ApplicationStageHistory::class)
+            ->latest('changed_at')
             ->latest('id');
     }
 

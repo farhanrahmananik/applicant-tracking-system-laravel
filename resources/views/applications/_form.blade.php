@@ -2,6 +2,9 @@
     $application = $application ?? null;
     $selectedCandidateId = old('candidate_id', $application?->candidate_id ?? request('candidate_id'));
     $selectedJobPostingId = old('job_posting_id', $application?->job_posting_id ?? request('job_posting_id'));
+    $stageOptions = $application
+        ? collect([$application->current_status, ...($pipelineTransitions ?? [])])->unique()
+        : collect(['applied']);
 @endphp
 
 <div class="form-section">
@@ -83,9 +86,9 @@
         </div>
 
         <div class="col-md-4">
-            <label class="form-label" for="current_status">Status</label>
+            <label class="form-label" for="current_status">Pipeline stage</label>
             <select class="form-select @error('current_status') is-invalid @enderror" id="current_status" name="current_status" required>
-                @foreach (App\Models\Application::STATUSES as $status)
+                @foreach ($stageOptions as $status)
                     <option value="{{ $status }}" @selected(old('current_status', $application?->current_status ?? 'applied') === $status)>
                         {{ Illuminate\Support\Str::headline($status) }}
                     </option>

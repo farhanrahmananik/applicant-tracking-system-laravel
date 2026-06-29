@@ -233,7 +233,7 @@ class ApplicationTrackingTest extends TestCase
                 'job_posting_id' => 999999,
                 'source' => str_repeat('a', 101),
                 'applied_date' => now()->addDay()->toDateString(),
-                'current_status' => 'interview',
+                'current_status' => 'offer',
                 'notes' => str_repeat('a', 5001),
             ])
             ->assertRedirect(route('applications.create'))
