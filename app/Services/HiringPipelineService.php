@@ -23,6 +23,10 @@ class HiringPipelineService
         'withdrawn' => [],
     ];
 
+    public function __construct(
+        private readonly AuditLogService $auditLogService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $filters
      * @return array<string, Collection<int, Application>>
@@ -134,6 +138,13 @@ class HiringPipelineService
                 'note' => $note,
                 'changed_at' => now(),
             ]);
+            $this->auditLogService->statusChanged(
+                $application,
+                'current_status',
+                $fromStage,
+                $toStage,
+                "Application #{$application->getKey()} moved from {$fromStage} to {$toStage}.",
+            );
 
             return $application->refresh();
         }, 3);

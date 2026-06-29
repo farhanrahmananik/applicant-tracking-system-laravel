@@ -25,6 +25,7 @@ class OfferService
 
     public function __construct(
         private readonly EmailNotificationService $emailNotificationService,
+        private readonly AuditLogService $auditLogService,
     ) {}
 
     /**
@@ -108,12 +109,18 @@ class OfferService
             $data['created_by_id'] = $actorId;
             $data['updated_by_id'] = $actorId;
 
-            return Offer::query()->create($data)->load([
+            $offer = Offer::query()->create($data)->load([
                 'application.candidate',
                 'application.jobPosting.company',
                 'createdBy',
                 'updatedBy',
             ]);
+            $this->auditLogService->created(
+                $offer,
+                "Offer #{$offer->getKey()} created.",
+            );
+
+            return $offer;
         }, 3);
     }
 
@@ -124,6 +131,7 @@ class OfferService
     {
         return DB::transaction(function () use ($offer, $data): Offer {
             $offer = $this->lockOffer($offer);
+            $before = $this->auditLogService->snapshot($offer);
 
             if (! $offer->isDraft()) {
                 throw ValidationException::withMessages([
@@ -133,6 +141,11 @@ class OfferService
 
             $data['updated_by_id'] = Auth::id();
             $offer->update($data);
+            $this->auditLogService->updated(
+                $offer,
+                $before,
+                "Offer #{$offer->getKey()} updated.",
+            );
 
             return $offer->refresh()->load([
                 'application.candidate',
@@ -169,6 +182,13 @@ class OfferService
                 'changed_by_id' => $actorId,
                 'changed_at' => now(),
             ]);
+            $this->auditLogService->statusChanged(
+                $offer,
+                'status',
+                $fromStatus,
+                $toStatus,
+                "Offer #{$offer->getKey()} moved from {$fromStatus} to {$toStatus}.",
+            );
 
             return $offer->refresh();
         }, 3);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CandidateResumeController;
@@ -247,6 +248,18 @@ Route::middleware(['auth', 'active', 'permission:reports.view'])
         Route::get('/offers/export', [ReportController::class, 'exportOffers'])
             ->name('offers.export');
     });
+
+Route::middleware(['auth', 'active'])->prefix('audit-logs')->name('audit-logs.')->group(function () {
+    Route::get('/', [AuditLogController::class, 'index'])
+        ->middleware('permission:view-audit-logs')
+        ->name('index');
+    Route::get('/export', [AuditLogController::class, 'export'])
+        ->middleware('permission:export-audit-logs')
+        ->name('export');
+    Route::get('/{auditLog}', [AuditLogController::class, 'show'])
+        ->middleware('permission:view-audit-logs')
+        ->name('show');
+});
 
 Route::middleware(['auth', 'active'])
     ->prefix('interviews/{interview}/feedback')

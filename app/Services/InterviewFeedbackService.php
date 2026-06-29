@@ -10,6 +10,10 @@ use Illuminate\Validation\ValidationException;
 
 class InterviewFeedbackService
 {
+    public function __construct(
+        private readonly AuditLogService $auditLogService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $data
      */
@@ -33,11 +37,17 @@ class InterviewFeedbackService
             $data['submitted_by_id'] = $submitterId;
             $data['submitted_at'] = now();
 
-            return InterviewFeedback::query()->create($data)->load([
+            $feedback = InterviewFeedback::query()->create($data)->load([
                 'interviewSchedule.application.candidate',
                 'interviewSchedule.application.jobPosting.company',
                 'submittedBy',
             ]);
+            $this->auditLogService->created(
+                $feedback,
+                "Interview feedback #{$feedback->getKey()} created.",
+            );
+
+            return $feedback;
         }, 3);
     }
 
@@ -51,10 +61,16 @@ class InterviewFeedbackService
                 ->whereKey($feedback->getKey())
                 ->lockForUpdate()
                 ->firstOrFail();
+            $before = $this->auditLogService->snapshot($feedback);
             $interview = $this->lockInterview($feedback->interviewSchedule);
             $this->ensureInterviewAcceptsFeedback($interview);
 
             $feedback->update($data);
+            $this->auditLogService->updated(
+                $feedback,
+                $before,
+                "Interview feedback #{$feedback->getKey()} updated.",
+            );
 
             return $feedback->refresh()->load([
                 'interviewSchedule.application.candidate',

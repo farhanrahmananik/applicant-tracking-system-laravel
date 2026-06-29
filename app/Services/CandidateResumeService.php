@@ -18,6 +18,10 @@ class CandidateResumeService
 {
     private const DISK = 'local';
 
+    public function __construct(
+        private readonly AuditLogService $auditLogService,
+    ) {}
+
     public function upload(
         Candidate $candidate,
         UploadedFile $file,
@@ -41,7 +45,7 @@ class CandidateResumeService
                     $candidate->resumes()->update(['is_primary' => false]);
                 }
 
-                return $candidate->resumes()->create([
+                $resume = $candidate->resumes()->create([
                     'uploaded_by_id' => Auth::id(),
                     'original_name' => $this->sanitizeOriginalName($file->getClientOriginalName()),
                     'stored_path' => $path,
@@ -52,6 +56,13 @@ class CandidateResumeService
                     'is_primary' => $makePrimary,
                     'uploaded_at' => now(),
                 ]);
+                $this->auditLogService->uploaded(
+                    $resume,
+                    "Resume uploaded for candidate #{$candidate->getKey()}.",
+                    $this->auditLogService->snapshot($resume),
+                );
+
+                return $resume;
             });
         } catch (Throwable $exception) {
             Storage::disk(self::DISK)->delete($path);
@@ -66,6 +77,12 @@ class CandidateResumeService
             Storage::disk($resume->disk)->exists($resume->stored_path),
             404,
             'The requested resume file is unavailable.',
+        );
+
+        $this->auditLogService->downloaded(
+            $resume,
+            "Resume downloaded for candidate #{$resume->candidate_id}.",
+            $this->auditLogService->snapshot($resume),
         );
 
         return Storage::disk($resume->disk)->download(
@@ -86,8 +103,14 @@ class CandidateResumeService
         DB::transaction(function () use ($resume): void {
             $candidate = $resume->candidate;
             $wasPrimary = $resume->is_primary;
+            $before = $this->auditLogService->snapshot($resume);
 
             $resume->delete();
+            $this->auditLogService->deleted(
+                $resume,
+                "Resume deleted for candidate #{$resume->candidate_id}.",
+                $before,
+            );
 
             if ($wasPrimary) {
                 $candidate->resumes()

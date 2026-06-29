@@ -23,6 +23,7 @@ class InterviewScheduleService
 
     public function __construct(
         private readonly EmailNotificationService $emailNotificationService,
+        private readonly AuditLogService $auditLogService,
     ) {}
 
     /**
@@ -144,13 +145,19 @@ class InterviewScheduleService
             $data['created_by_id'] = $actorId;
             $data['updated_by_id'] = $actorId;
 
-            return InterviewSchedule::query()->create($data)->load([
+            $interview = InterviewSchedule::query()->create($data)->load([
                 'application.candidate',
                 'application.jobPosting.company',
                 'interviewer',
                 'createdBy',
                 'updatedBy',
             ]);
+            $this->auditLogService->created(
+                $interview,
+                "Interview #{$interview->getKey()} scheduled.",
+            );
+
+            return $interview;
         }, 3);
 
         if ($interview->status === 'cancelled') {
@@ -169,11 +176,30 @@ class InterviewScheduleService
     {
         $previousStatus = $interview->status;
         $interview = DB::transaction(function () use ($interview, $data): InterviewSchedule {
+            $before = $this->auditLogService->snapshot($interview);
             $this->ensureApplicationCanBeScheduled((int) $data['application_id']);
             $this->ensureInterviewerIsEligible((int) $data['interviewer_id']);
 
             $data['updated_by_id'] = Auth::id();
             $interview->update($data);
+
+            if (($before['status'] ?? null) !== $interview->status) {
+                $this->auditLogService->statusChanged(
+                    $interview,
+                    'status',
+                    (string) ($before['status'] ?? ''),
+                    $interview->status,
+                    $interview->status === 'cancelled'
+                        ? "Interview #{$interview->getKey()} cancelled."
+                        : "Interview #{$interview->getKey()} status changed.",
+                );
+            } else {
+                $this->auditLogService->updated(
+                    $interview,
+                    $before,
+                    "Interview #{$interview->getKey()} updated.",
+                );
+            }
 
             return $interview->refresh()->load([
                 'application.candidate',
@@ -195,7 +221,15 @@ class InterviewScheduleService
 
     public function delete(InterviewSchedule $interview): void
     {
-        DB::transaction(fn () => $interview->delete());
+        DB::transaction(function () use ($interview): void {
+            $before = $this->auditLogService->snapshot($interview);
+            $interview->delete();
+            $this->auditLogService->deleted(
+                $interview,
+                "Interview #{$interview->getKey()} deleted.",
+                $before,
+            );
+        });
     }
 
     /**

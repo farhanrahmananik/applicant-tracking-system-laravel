@@ -14,6 +14,10 @@ use Illuminate\Validation\ValidationException;
 
 class JobPostingService
 {
+    public function __construct(
+        private readonly AuditLogService $auditLogService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $filters
      * @return LengthAwarePaginator<JobPosting>
@@ -100,12 +104,18 @@ class JobPostingService
             $this->ensureDepartmentBelongsToCompany($data);
             $data = $this->prepareData($data);
 
-            return JobPosting::query()->create($data)->load([
+            $jobPosting = JobPosting::query()->create($data)->load([
                 'company',
                 'department',
                 'createdBy',
                 'updatedBy',
             ]);
+            $this->auditLogService->created(
+                $jobPosting,
+                "Job posting {$jobPosting->title} created.",
+            );
+
+            return $jobPosting;
         });
     }
 
@@ -115,10 +125,16 @@ class JobPostingService
     public function update(JobPosting $jobPosting, array $data): JobPosting
     {
         return DB::transaction(function () use ($jobPosting, $data): JobPosting {
+            $before = $this->auditLogService->snapshot($jobPosting);
             $this->ensureDepartmentBelongsToCompany($data);
             $data = $this->prepareData($data, $jobPosting);
 
             $jobPosting->update($data);
+            $this->auditLogService->updated(
+                $jobPosting,
+                $before,
+                "Job posting {$jobPosting->title} updated.",
+            );
 
             return $jobPosting->refresh()->load([
                 'company',
@@ -131,7 +147,15 @@ class JobPostingService
 
     public function delete(JobPosting $jobPosting): void
     {
-        DB::transaction(fn () => $jobPosting->delete());
+        DB::transaction(function () use ($jobPosting): void {
+            $before = $this->auditLogService->snapshot($jobPosting);
+            $jobPosting->delete();
+            $this->auditLogService->deleted(
+                $jobPosting,
+                "Job posting {$jobPosting->title} deleted.",
+                $before,
+            );
+        });
     }
 
     /**

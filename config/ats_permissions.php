@@ -22,6 +22,10 @@ return [
             'name' => 'View audit logs',
             'description' => 'View security and business audit activity.',
         ],
+        'export-audit-logs' => [
+            'name' => 'Export audit logs',
+            'description' => 'Export filtered, sanitized audit activity.',
+        ],
         'view-own-candidate-profile' => [
             'name' => 'View own candidate profile',
             'description' => 'View the authenticated candidate profile.',
@@ -185,6 +189,7 @@ return [
                 'access-dashboard',
                 'manage-users',
                 'view-audit-logs',
+                'export-audit-logs',
                 'companies.view',
                 'companies.create',
                 'companies.update',
