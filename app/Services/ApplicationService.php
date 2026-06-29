@@ -15,6 +15,7 @@ class ApplicationService
 {
     public function __construct(
         private readonly HiringPipelineService $hiringPipelineService,
+        private readonly EmailNotificationService $emailNotificationService,
     ) {}
 
     /**
@@ -105,7 +106,7 @@ class ApplicationService
      */
     public function create(array $data): Application
     {
-        return DB::transaction(function () use ($data): Application {
+        $application = DB::transaction(function () use ($data): Application {
             $this->lockCandidateAndJobPosting($data);
             $this->ensureNoDuplicateActiveApplication($data);
 
@@ -120,6 +121,10 @@ class ApplicationService
                 'updatedBy',
             ]);
         }, 3);
+
+        $this->emailNotificationService->applicationCreated($application);
+
+        return $application;
     }
 
     /**

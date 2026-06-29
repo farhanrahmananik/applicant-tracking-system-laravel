@@ -23,6 +23,10 @@ class OfferService
         'expired' => [],
     ];
 
+    public function __construct(
+        private readonly EmailNotificationService $emailNotificationService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $filters
      * @return LengthAwarePaginator<Offer>
@@ -141,7 +145,7 @@ class OfferService
 
     public function transition(Offer $offer, string $toStatus, ?string $note = null): Offer
     {
-        return DB::transaction(function () use ($offer, $toStatus, $note): Offer {
+        $offer = DB::transaction(function () use ($offer, $toStatus, $note): Offer {
             $offer = $this->lockOffer($offer);
             $fromStatus = $offer->status;
 
@@ -168,6 +172,15 @@ class OfferService
 
             return $offer->refresh();
         }, 3);
+
+        match ($offer->status) {
+            'sent' => $this->emailNotificationService->offerSent($offer),
+            'accepted' => $this->emailNotificationService->offerAccepted($offer),
+            'declined' => $this->emailNotificationService->offerDeclined($offer),
+            default => null,
+        };
+
+        return $offer;
     }
 
     /**

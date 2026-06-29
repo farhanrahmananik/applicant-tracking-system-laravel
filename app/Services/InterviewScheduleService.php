@@ -21,6 +21,10 @@ class InterviewScheduleService
         'interviewer',
     ];
 
+    public function __construct(
+        private readonly EmailNotificationService $emailNotificationService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $filters
      * @return LengthAwarePaginator<InterviewSchedule>
@@ -132,7 +136,7 @@ class InterviewScheduleService
      */
     public function create(array $data): InterviewSchedule
     {
-        return DB::transaction(function () use ($data): InterviewSchedule {
+        $interview = DB::transaction(function () use ($data): InterviewSchedule {
             $this->ensureApplicationCanBeScheduled((int) $data['application_id']);
             $this->ensureInterviewerIsEligible((int) $data['interviewer_id']);
 
@@ -148,6 +152,14 @@ class InterviewScheduleService
                 'updatedBy',
             ]);
         }, 3);
+
+        if ($interview->status === 'cancelled') {
+            $this->emailNotificationService->interviewCancelled($interview);
+        } else {
+            $this->emailNotificationService->interviewScheduled($interview);
+        }
+
+        return $interview;
     }
 
     /**
@@ -155,7 +167,8 @@ class InterviewScheduleService
      */
     public function update(InterviewSchedule $interview, array $data): InterviewSchedule
     {
-        return DB::transaction(function () use ($interview, $data): InterviewSchedule {
+        $previousStatus = $interview->status;
+        $interview = DB::transaction(function () use ($interview, $data): InterviewSchedule {
             $this->ensureApplicationCanBeScheduled((int) $data['application_id']);
             $this->ensureInterviewerIsEligible((int) $data['interviewer_id']);
 
@@ -170,6 +183,14 @@ class InterviewScheduleService
                 'updatedBy',
             ]);
         }, 3);
+
+        if ($interview->status === 'cancelled' && $previousStatus !== 'cancelled') {
+            $this->emailNotificationService->interviewCancelled($interview);
+        } else {
+            $this->emailNotificationService->interviewUpdated($interview);
+        }
+
+        return $interview;
     }
 
     public function delete(InterviewSchedule $interview): void
