@@ -7,6 +7,8 @@ use App\Models\User;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -61,6 +63,57 @@ class AuthenticationTest extends TestCase
             ->assertRedirect(route('login'))
             ->assertSessionHasErrors('email');
         $this->assertGuest();
+    }
+
+    public function test_repeated_failed_logins_are_rate_limited(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'rate-limited@ats.test',
+            'password' => Hash::make('correct-password'),
+        ]);
+        $throttleKey = Str::transliterate(Str::lower($user->email)).'|127.0.0.1';
+
+        RateLimiter::clear($throttleKey);
+
+        foreach (range(1, 5) as $attempt) {
+            $this->from(route('login'))->post(route('login.store'), [
+                'email' => $user->email,
+                'password' => "wrong-password-{$attempt}",
+            ])->assertSessionHasErrors('email');
+        }
+
+        $this->from(route('login'))->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'correct-password',
+        ])->assertSessionHasErrors('email');
+
+        $this->assertTrue(RateLimiter::tooManyAttempts($throttleKey, 5));
+        $this->assertGuest();
+
+        RateLimiter::clear($throttleKey);
+    }
+
+    public function test_login_redirects_to_the_originally_requested_protected_page(): void
+    {
+        $this->seed(RolePermissionSeeder::class);
+
+        $user = User::factory()->create([
+            'email' => 'intended-route@ats.test',
+            'password' => Hash::make('secret-password'),
+        ]);
+        $user->roles()->sync([
+            Role::query()->where('slug', 'recruiter')->value('id'),
+        ]);
+
+        $this->get(route('candidates.index'))
+            ->assertRedirect(route('login'));
+
+        $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'secret-password',
+        ])->assertRedirect(route('candidates.index'));
+
+        $this->assertAuthenticatedAs($user);
     }
 
     public function test_inactive_user_cannot_login(): void

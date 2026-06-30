@@ -59,7 +59,7 @@ class DepartmentService
                     ->where('is_active', true)
                     ->when(
                         $includeCompanyId !== null,
-                        fn ($query) => $query->orWhereKey($includeCompanyId),
+                        fn ($query) => $query->orWhere('companies.id', $includeCompanyId),
                     );
             })
             ->orderBy('name')

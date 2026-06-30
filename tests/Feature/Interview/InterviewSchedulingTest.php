@@ -264,6 +264,24 @@ class InterviewSchedulingTest extends TestCase
         $this->assertDatabaseCount('interview_schedules', 0);
     }
 
+    public function test_active_user_without_an_internal_interviewer_role_cannot_be_assigned(): void
+    {
+        $recruiter = $this->createUserWithRole('recruiter');
+        $candidateUser = $this->createUserWithRole('candidate');
+        $application = Application::factory()->create();
+
+        $this->actingAs($recruiter)
+            ->from(route('interviews.create'))
+            ->post(
+                route('interviews.store'),
+                $this->validPayload($application, $candidateUser),
+            )
+            ->assertRedirect(route('interviews.create'))
+            ->assertSessionHasErrors('interviewer_id');
+
+        $this->assertDatabaseCount('interview_schedules', 0);
+    }
+
     public function test_permissions_block_unauthorized_actions(): void
     {
         $candidateUser = $this->createUserWithRole('candidate');
