@@ -144,6 +144,31 @@ class CandidateResumeManagementTest extends TestCase
         Storage::disk('local')->assertMissing($resume->stored_path);
     }
 
+    public function test_deleting_primary_resume_promotes_an_existing_resume(): void
+    {
+        Storage::fake('local');
+
+        $user = $this->createUserWithRole('hr_manager');
+        $candidate = Candidate::factory()->create();
+        $primaryResume = CandidateResume::factory()->primary()->for($candidate)->create([
+            'stored_path' => "resumes/candidates/{$candidate->id}/primary.pdf",
+        ]);
+        $replacementResume = CandidateResume::factory()->for($candidate)->create([
+            'stored_path' => "resumes/candidates/{$candidate->id}/replacement.pdf",
+        ]);
+        Storage::disk('local')->put($primaryResume->stored_path, 'primary resume');
+        Storage::disk('local')->put($replacementResume->stored_path, 'replacement resume');
+
+        $this->actingAs($user)
+            ->delete(route('candidates.resumes.destroy', [$candidate, $primaryResume]))
+            ->assertRedirect(route('candidates.show', $candidate));
+
+        $this->assertSoftDeleted($primaryResume);
+        $this->assertTrue($replacementResume->refresh()->is_primary);
+        Storage::disk('local')->assertMissing($primaryResume->stored_path);
+        Storage::disk('local')->assertExists($replacementResume->stored_path);
+    }
+
     public function test_unauthorized_user_cannot_delete_resume(): void
     {
         Storage::fake('local');

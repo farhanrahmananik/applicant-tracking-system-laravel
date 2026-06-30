@@ -99,7 +99,7 @@ class InterviewScheduleService
                     ->whereIn('current_status', Application::ACTIVE_STATUSES)
                     ->when(
                         $includeApplicationId !== null,
-                        fn ($query) => $query->orWhereKey($includeApplicationId),
+                        fn ($query) => $query->orWhere('applications.id', $includeApplicationId),
                     );
             })
             ->latest('applied_date')
@@ -125,7 +125,7 @@ class InterviewScheduleService
                     })
                     ->when(
                         $includeUserId !== null,
-                        fn ($query) => $query->orWhereKey($includeUserId),
+                        fn ($query) => $query->orWhere('users.id', $includeUserId),
                     );
             })
             ->orderBy('name')
