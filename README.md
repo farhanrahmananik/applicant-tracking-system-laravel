@@ -274,15 +274,13 @@ Coverage includes authentication, throttling, inactive users, permissions, CRUD 
 
 ## Screenshots
 
-Screenshots are not currently committed to this repository. This section is intentionally left without image links rather than referencing files that do not exist.
+### Dashboard - Dark Mode
 
-Recommended future captures include:
+![Applicant Tracking System dashboard in dark mode](docs/screenshots/dashboard-dark.png)
 
-- Dashboard in dark and light mode
-- Candidate and application detail pages
-- Hiring pipeline board
-- Interview feedback and offer history
-- Reports and audit-log views
+### Login - Dark Mode
+
+![Applicant Tracking System login screen in dark mode](docs/screenshots/login-dark.png)
 
 ## Scope Notes
 
