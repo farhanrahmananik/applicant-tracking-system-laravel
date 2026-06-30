@@ -8,7 +8,7 @@
     <div class="report-header-actions">
         <a class="btn btn-outline-secondary" href="{{ route('reports.index') }}">All reports</a>
         @isset($exportRoute)
-            <a class="btn btn-primary" href="{{ route($exportRoute, $filters) }}">Export CSV</a>
+            <a class="btn btn-primary" href="{{ route($exportRoute, $filters) }}"><i class="bi bi-download" aria-hidden="true"></i>Export CSV</a>
         @endisset
     </div>
 </div>

@@ -24,9 +24,9 @@
         </div>
 
         <div class="resource-header-actions">
-            <a class="btn btn-outline-secondary" href="{{ route('interviews.show', $interview) }}">Back</a>
+            <a class="btn btn-outline-secondary" href="{{ route('interviews.show', $interview) }}"><i class="bi bi-arrow-left" aria-hidden="true"></i>Back</a>
             @can('interview-feedback.update')
-                <a class="btn btn-primary" href="{{ route('interview-feedback.edit', $feedback) }}">Edit feedback</a>
+                <a class="btn btn-primary" href="{{ route('interview-feedback.edit', $feedback) }}"><i class="bi bi-pencil-square" aria-hidden="true"></i>Edit feedback</a>
             @endcan
         </div>
     </header>

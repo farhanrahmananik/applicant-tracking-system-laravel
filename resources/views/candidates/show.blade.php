@@ -24,9 +24,9 @@
         </div>
 
         <div class="resource-header-actions">
-            <a class="btn btn-outline-secondary" href="{{ route('candidates.index') }}">Back</a>
+            <a class="btn btn-outline-secondary" href="{{ route('candidates.index') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i>Back</a>
             @can('candidates.edit')
-                <a class="btn btn-primary" href="{{ route('candidates.edit', $candidate) }}">Edit candidate</a>
+                <a class="btn btn-primary" href="{{ route('candidates.edit', $candidate) }}"><i class="bi bi-pencil-square" aria-hidden="true"></i>Edit candidate</a>
             @endcan
             @can('candidates.delete')
                 <form
@@ -179,7 +179,7 @@
                     <input class="form-check-input" id="is_primary" name="is_primary" type="checkbox" value="1">
                     <label class="form-check-label" for="is_primary">Set as primary</label>
                 </div>
-                <button class="btn btn-primary" type="submit">Upload resume</button>
+                <button class="btn btn-primary" type="submit"><i class="bi bi-cloud-arrow-up" aria-hidden="true"></i>Upload resume</button>
             </form>
         @endcan
 

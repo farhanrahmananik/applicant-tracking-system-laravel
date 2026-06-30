@@ -19,9 +19,9 @@
         </div>
 
         <div class="resource-header-actions">
-            <a class="btn btn-outline-secondary" href="{{ route('applications.index') }}">Back</a>
+            <a class="btn btn-outline-secondary" href="{{ route('applications.index') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i>Back</a>
             @can('applications.update')
-                <a class="btn btn-primary" href="{{ route('applications.edit', $application) }}">Edit application</a>
+                <a class="btn btn-primary" href="{{ route('applications.edit', $application) }}"><i class="bi bi-pencil-square" aria-hidden="true"></i>Edit application</a>
             @endcan
             @can('applications.delete')
                 <form

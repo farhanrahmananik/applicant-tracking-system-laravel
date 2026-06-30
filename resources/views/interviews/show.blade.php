@@ -19,9 +19,9 @@
         </div>
 
         <div class="resource-header-actions">
-            <a class="btn btn-outline-secondary" href="{{ route('interviews.index') }}">Back</a>
+            <a class="btn btn-outline-secondary" href="{{ route('interviews.index') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i>Back</a>
             @can('interviews.update')
-                <a class="btn btn-primary" href="{{ route('interviews.edit', $interview) }}">Edit interview</a>
+                <a class="btn btn-primary" href="{{ route('interviews.edit', $interview) }}"><i class="bi bi-pencil-square" aria-hidden="true"></i>Edit interview</a>
             @endcan
             @can('interviews.delete')
                 <form

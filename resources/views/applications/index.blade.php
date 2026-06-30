@@ -18,7 +18,7 @@
         </div>
 
         @can('applications.create')
-            <a class="btn btn-primary" href="{{ route('applications.create') }}">Create application</a>
+            <a class="btn btn-primary" href="{{ route('applications.create') }}"><i class="bi bi-plus-lg" aria-hidden="true"></i>Create application</a>
         @endcan
     </header>
 
@@ -67,7 +67,7 @@
                 @endforeach
             </select>
         </div>
-        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Filter</button>
         @if (collect(['search', 'current_status', 'job_posting_id', 'source'])->contains(fn ($key) => request()->filled($key)))
             <a class="btn btn-link" href="{{ route('applications.index') }}">Clear</a>
         @endif
@@ -108,9 +108,9 @@
                             <td class="text-nowrap">{{ $application->applied_date->format('M j, Y') }}</td>
                             <td>
                                 <div class="table-actions">
-                                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('applications.show', $application) }}">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('applications.show', $application) }}" aria-label="View application #{{ $application->id }}" title="View"><i class="bi bi-eye" aria-hidden="true"></i></a>
                                     @can('applications.update')
-                                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('applications.edit', $application) }}">Edit</a>
+                                        <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('applications.edit', $application) }}" aria-label="Edit application #{{ $application->id }}" title="Edit"><i class="bi bi-pencil" aria-hidden="true"></i></a>
                                     @endcan
                                     @can('applications.delete')
                                         <form
@@ -120,7 +120,7 @@
                                         >
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                            <button class="btn btn-sm btn-outline-danger table-icon-action" type="submit" aria-label="Delete application #{{ $application->id }}" title="Delete"><i class="bi bi-trash3" aria-hidden="true"></i></button>
                                         </form>
                                     @endcan
                                 </div>

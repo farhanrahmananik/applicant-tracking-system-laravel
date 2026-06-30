@@ -24,9 +24,9 @@
         </div>
 
         <div class="resource-header-actions">
-            <a class="btn btn-outline-secondary" href="{{ route('companies.index') }}">Back</a>
+            <a class="btn btn-outline-secondary" href="{{ route('companies.index') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i>Back</a>
             @can('companies.update')
-                <a class="btn btn-primary" href="{{ route('companies.edit', $company) }}">Edit company</a>
+                <a class="btn btn-primary" href="{{ route('companies.edit', $company) }}"><i class="bi bi-pencil-square" aria-hidden="true"></i>Edit company</a>
             @endcan
         </div>
     </header>

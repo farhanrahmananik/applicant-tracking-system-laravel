@@ -18,7 +18,7 @@
         </div>
 
         @can('job-postings.create')
-            <a class="btn btn-primary" href="{{ route('job-postings.create') }}">Create job posting</a>
+            <a class="btn btn-primary" href="{{ route('job-postings.create') }}"><i class="bi bi-plus-lg" aria-hidden="true"></i>Create job posting</a>
         @endcan
     </header>
 
@@ -99,7 +99,7 @@
                 @endforeach
             </select>
         </div>
-        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Filter</button>
         @if (collect(['search', 'company_id', 'department_id', 'status', 'employment_type', 'workplace_type'])->contains(fn ($key) => request()->filled($key)))
             <a class="btn btn-link" href="{{ route('job-postings.index') }}">Clear</a>
         @endif
@@ -147,9 +147,9 @@
                             <td class="text-nowrap">{{ $jobPosting->closes_at?->format('M j, Y') ?? 'Open-ended' }}</td>
                             <td>
                                 <div class="table-actions">
-                                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('job-postings.show', $jobPosting) }}">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('job-postings.show', $jobPosting) }}" aria-label="View {{ $jobPosting->title }}" title="View"><i class="bi bi-eye" aria-hidden="true"></i></a>
                                     @can('job-postings.update')
-                                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('job-postings.edit', $jobPosting) }}">Edit</a>
+                                        <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('job-postings.edit', $jobPosting) }}" aria-label="Edit {{ $jobPosting->title }}" title="Edit"><i class="bi bi-pencil" aria-hidden="true"></i></a>
                                     @endcan
                                     @can('job-postings.delete')
                                         <form
@@ -159,7 +159,7 @@
                                         >
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                            <button class="btn btn-sm btn-outline-danger table-icon-action" type="submit" aria-label="Delete {{ $jobPosting->title }}" title="Delete"><i class="bi bi-trash3" aria-hidden="true"></i></button>
                                         </form>
                                     @endcan
                                 </div>

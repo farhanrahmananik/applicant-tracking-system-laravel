@@ -171,8 +171,9 @@
 </div>
 
 <div class="form-actions">
-    <a class="btn btn-outline-secondary" href="{{ $interview ? route('interviews.show', $interview) : route('interviews.index') }}">Cancel</a>
+    <a class="btn btn-outline-secondary" href="{{ $interview ? route('interviews.show', $interview) : route('interviews.index') }}"><i class="bi bi-x-lg" aria-hidden="true"></i>Cancel</a>
     <button class="btn btn-primary" type="submit">
+        <i class="bi bi-check2" aria-hidden="true"></i>
         {{ $interview ? 'Save changes' : 'Schedule interview' }}
     </button>
 </div>

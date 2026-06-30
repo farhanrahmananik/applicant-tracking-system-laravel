@@ -117,8 +117,9 @@
 </div>
 
 <div class="form-actions">
-    <a class="btn btn-outline-secondary" href="{{ $application ? route('applications.show', $application) : route('applications.index') }}">Cancel</a>
+    <a class="btn btn-outline-secondary" href="{{ $application ? route('applications.show', $application) : route('applications.index') }}"><i class="bi bi-x-lg" aria-hidden="true"></i>Cancel</a>
     <button class="btn btn-primary" type="submit">
+        <i class="bi bi-check2" aria-hidden="true"></i>
         {{ $application ? 'Save changes' : 'Create application' }}
     </button>
 </div>

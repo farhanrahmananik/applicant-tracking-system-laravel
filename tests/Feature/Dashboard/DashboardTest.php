@@ -67,10 +67,10 @@ class DashboardTest extends TestCase
             ->assertSeeText('Account metrics')
             ->assertSeeText('Recent users')
             ->assertSeeText('Role distribution')
-            ->assertSeeText('Upcoming ATS Modules')
+            ->assertSeeText('Recruitment workspace')
             ->assertSeeText('Recent Recruiter')
-            ->assertSeeText('Company')
-            ->assertSeeText('Interview')
+            ->assertSeeText('Companies')
+            ->assertSeeText('Interviews')
             ->assertSeeText('Reports');
     }
 

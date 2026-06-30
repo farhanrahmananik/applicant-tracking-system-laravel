@@ -169,7 +169,7 @@
     @endif
 
     <div class="report-filter-actions">
-        <button class="btn btn-primary" type="submit">Apply filters</button>
+        <button class="btn btn-primary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Apply filters</button>
         <a class="btn btn-outline-secondary" href="{{ route($routeName) }}">Reset</a>
     </div>
 </form>

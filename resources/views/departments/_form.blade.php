@@ -160,9 +160,10 @@
         class="btn btn-outline-secondary"
         href="{{ $department ? route('departments.show', $department) : route('departments.index') }}"
     >
-        Cancel
+        <i class="bi bi-x-lg" aria-hidden="true"></i>Cancel
     </a>
     <button class="btn btn-primary" type="submit">
+        <i class="bi bi-check2" aria-hidden="true"></i>
         {{ $department ? 'Save changes' : 'Create department' }}
     </button>
 </div>
