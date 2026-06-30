@@ -18,7 +18,7 @@
         </div>
 
         @can('offers.create')
-            <a class="btn btn-primary" href="{{ route('offers.create') }}">Create offer</a>
+            <a class="btn btn-primary" href="{{ route('offers.create') }}"><i class="bi bi-plus-lg" aria-hidden="true"></i>Create offer</a>
         @endcan
     </header>
 
@@ -45,7 +45,7 @@
                 @endforeach
             </select>
         </div>
-        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Filter</button>
         @if (request()->filled('search') || request()->filled('status'))
             <a class="btn btn-link" href="{{ route('offers.index') }}">Clear</a>
         @endif
@@ -87,10 +87,10 @@
                             <td class="text-nowrap">{{ $offer->expiry_date->format('M j, Y') }}</td>
                             <td>
                                 <div class="table-actions">
-                                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('offers.show', $offer) }}">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('offers.show', $offer) }}" aria-label="View offer #{{ $offer->id }}" title="View"><i class="bi bi-eye" aria-hidden="true"></i></a>
                                     @can('offers.update')
                                         @if ($offer->isDraft())
-                                            <a class="btn btn-sm btn-outline-secondary" href="{{ route('offers.edit', $offer) }}">Edit</a>
+                                            <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('offers.edit', $offer) }}" aria-label="Edit offer #{{ $offer->id }}" title="Edit"><i class="bi bi-pencil" aria-hidden="true"></i></a>
                                         @endif
                                     @endcan
                                 </div>

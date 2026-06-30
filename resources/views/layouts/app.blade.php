@@ -6,21 +6,32 @@
     <meta name="color-scheme" content="light dark">
     <title>@yield('title', 'Dashboard') | {{ config('app.name') }}</title>
     <script src="{{ asset('js/ats-theme.js') }}"></script>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous"
-    >
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="{{ asset('css/ats.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="app-body">
     <div class="app-shell">
-        <aside class="app-sidebar">
-            <a class="ats-brand" href="{{ route('dashboard') }}">
-                <span class="ats-brand-mark">ATS</span>
-                <span>Applicant Tracking</span>
-            </a>
+        <div class="app-sidebar-backdrop" data-sidebar-backdrop></div>
+
+        <aside class="app-sidebar" id="app-sidebar" data-app-sidebar>
+            <div class="app-sidebar-header">
+                <a class="ats-brand" href="{{ route('dashboard') }}">
+                    <span class="ats-brand-mark"><i class="bi bi-people-fill" aria-hidden="true"></i></span>
+                    <span class="ats-brand-copy">
+                        <strong>Applicant Tracking</strong>
+                        <small>HR Workspace</small>
+                    </span>
+                </a>
+                <button
+                    class="app-icon-button sidebar-close-button"
+                    type="button"
+                    data-sidebar-toggle
+                    aria-label="Close navigation"
+                    aria-expanded="false"
+                >
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
 
             <nav class="app-sidebar-nav" aria-label="Primary navigation">
                 <div class="app-nav-label">Workspace</div>
@@ -29,7 +40,8 @@
                     href="{{ route('dashboard') }}"
                     @if (request()->routeIs('dashboard')) aria-current="page" @endif
                 >
-                    Dashboard
+                    <i class="bi bi-grid-1x2-fill" aria-hidden="true"></i>
+                    <span>Dashboard</span>
                 </a>
 
                 @canany(['companies.view', 'departments.view'])
@@ -42,7 +54,8 @@
                         href="{{ route('companies.index') }}"
                         @if (request()->routeIs('companies.*')) aria-current="page" @endif
                     >
-                        Companies
+                        <i class="bi bi-buildings" aria-hidden="true"></i>
+                        <span>Companies</span>
                     </a>
                 @endcan
 
@@ -52,7 +65,8 @@
                         href="{{ route('departments.index') }}"
                         @if (request()->routeIs('departments.*')) aria-current="page" @endif
                     >
-                        Departments
+                        <i class="bi bi-diagram-3" aria-hidden="true"></i>
+                        <span>Departments</span>
                     </a>
                 @endcan
 
@@ -66,10 +80,10 @@
                         href="{{ route('job-postings.index') }}"
                         @if (request()->routeIs('job-postings.*')) aria-current="page" @endif
                     >
-                        Job Postings
+                        <i class="bi bi-briefcase" aria-hidden="true"></i>
+                        <span>Job Postings</span>
                     </a>
                 @endcan
-
 
                 @can('candidates.view')
                     <a
@@ -77,7 +91,8 @@
                         href="{{ route('candidates.index') }}"
                         @if (request()->routeIs('candidates.*')) aria-current="page" @endif
                     >
-                        Candidates
+                        <i class="bi bi-person-vcard" aria-hidden="true"></i>
+                        <span>Candidates</span>
                     </a>
                 @endcan
 
@@ -87,7 +102,8 @@
                         href="{{ route('applications.index') }}"
                         @if (request()->routeIs('applications.*')) aria-current="page" @endif
                     >
-                        Applications
+                        <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+                        <span>Applications</span>
                     </a>
                 @endcan
 
@@ -97,7 +113,8 @@
                         href="{{ route('pipeline.index') }}"
                         @if (request()->routeIs('pipeline.*')) aria-current="page" @endif
                     >
-                        Hiring Pipeline
+                        <i class="bi bi-kanban" aria-hidden="true"></i>
+                        <span>Hiring Pipeline</span>
                     </a>
                 @endcan
 
@@ -107,7 +124,8 @@
                         href="{{ route('offers.index') }}"
                         @if (request()->routeIs('offers.*')) aria-current="page" @endif
                     >
-                        Offers
+                        <i class="bi bi-envelope-paper" aria-hidden="true"></i>
+                        <span>Offers</span>
                     </a>
                 @endcan
 
@@ -117,7 +135,8 @@
                         href="{{ route('interviews.index') }}"
                         @if (request()->routeIs('interviews.*')) aria-current="page" @endif
                     >
-                        Interviews
+                        <i class="bi bi-calendar2-check" aria-hidden="true"></i>
+                        <span>Interviews</span>
                     </a>
                 @endcan
 
@@ -128,7 +147,8 @@
                         href="{{ route('reports.index') }}"
                         @if (request()->routeIs('reports.*')) aria-current="page" @endif
                     >
-                        Reports
+                        <i class="bi bi-bar-chart-line" aria-hidden="true"></i>
+                        <span>Reports</span>
                     </a>
                 @endcan
 
@@ -139,43 +159,79 @@
                         href="{{ route('audit-logs.index') }}"
                         @if (request()->routeIs('audit-logs.*')) aria-current="page" @endif
                     >
-                        Audit Logs
+                        <i class="bi bi-shield-check" aria-hidden="true"></i>
+                        <span>Audit Logs</span>
                     </a>
                 @endcan
             </nav>
+
+            <div class="app-sidebar-footer">
+                <span class="system-status-dot" aria-hidden="true"></span>
+                <span>
+                    <strong>ATS Workspace</strong>
+                    <small>All systems operational</small>
+                </span>
+            </div>
         </aside>
 
         <div class="app-frame">
             <header class="app-topbar">
-                <div>
-                    <div class="app-user-name">{{ auth()->user()->name }}</div>
-                    <div class="app-user-email">{{ auth()->user()->email }}</div>
-                </div>
+                <div class="app-topbar-inner">
+                    <div class="topbar-context">
+                        <button
+                            class="app-icon-button sidebar-menu-button"
+                            type="button"
+                            data-sidebar-toggle
+                            aria-controls="app-sidebar"
+                            aria-label="Open navigation"
+                            aria-expanded="false"
+                        >
+                            <i class="bi bi-list" aria-hidden="true"></i>
+                        </button>
+                        <div>
+                            <span>ATS Workspace</span>
+                            <strong>@yield('title', 'Dashboard')</strong>
+                        </div>
+                    </div>
 
-                <div class="topbar-actions">
-                    <label class="theme-control" for="theme-toggle">
-                        <span>Dark mode</span>
-                        <span class="form-check form-switch m-0">
-                            <input
-                                class="form-check-input"
-                                id="theme-toggle"
-                                type="checkbox"
-                                role="switch"
-                                data-theme-toggle
-                            >
-                        </span>
-                    </label>
+                    <div class="topbar-actions">
+                        <button
+                            class="app-icon-button theme-control"
+                            id="theme-toggle"
+                            type="button"
+                            data-theme-toggle
+                            aria-label="Switch color theme"
+                            title="Switch color theme"
+                        >
+                            <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+                        </button>
 
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button class="btn btn-outline-secondary btn-sm" type="submit">Sign out</button>
-                    </form>
+                        <div class="topbar-divider" aria-hidden="true"></div>
+
+                        <div class="app-user-profile">
+                            <span class="app-user-avatar" aria-hidden="true">
+                                {{ strtoupper(Illuminate\Support\Str::substr(auth()->user()->name, 0, 1)) }}
+                            </span>
+                            <span class="app-user-copy">
+                                <strong class="app-user-name">{{ auth()->user()->name }}</strong>
+                                <small class="app-user-email">{{ auth()->user()->email }}</small>
+                            </span>
+                        </div>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="app-icon-button" type="submit" aria-label="Sign out" title="Sign out">
+                                <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </header>
 
             <main class="app-main">
                 @if (session('success'))
                     <div class="alert alert-success app-alert" role="status">
+                        <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                         {{ session('success') }}
                     </div>
                 @endif

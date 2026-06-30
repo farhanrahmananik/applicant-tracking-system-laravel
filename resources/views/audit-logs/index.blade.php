@@ -12,6 +12,7 @@
 
         @can('export-audit-logs')
             <a class="btn btn-primary" href="{{ route('audit-logs.export', $filters) }}">
+                <i class="bi bi-download" aria-hidden="true"></i>
                 Export CSV
             </a>
         @endcan
@@ -95,7 +96,7 @@
         </div>
 
         <div class="audit-filter-actions">
-            <button class="btn btn-primary" type="submit">Apply filters</button>
+            <button class="btn btn-primary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Apply filters</button>
             <a class="btn btn-outline-secondary" href="{{ route('audit-logs.index') }}">Reset</a>
         </div>
     </form>

@@ -183,9 +183,10 @@
 
 <div class="form-actions">
     <a class="btn btn-outline-secondary" href="{{ $company ? route('companies.show', $company) : route('companies.index') }}">
-        Cancel
+        <i class="bi bi-x-lg" aria-hidden="true"></i>Cancel
     </a>
     <button class="btn btn-primary" type="submit">
+        <i class="bi bi-check2" aria-hidden="true"></i>
         {{ $company ? 'Save changes' : 'Create company' }}
     </button>
 </div>

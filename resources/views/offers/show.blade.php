@@ -19,10 +19,10 @@
         </div>
 
         <div class="resource-header-actions">
-            <a class="btn btn-outline-secondary" href="{{ route('offers.index') }}">Back</a>
+            <a class="btn btn-outline-secondary" href="{{ route('offers.index') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i>Back</a>
             @can('offers.update')
                 @if ($offer->isDraft())
-                    <a class="btn btn-primary" href="{{ route('offers.edit', $offer) }}">Edit offer</a>
+                    <a class="btn btn-primary" href="{{ route('offers.edit', $offer) }}"><i class="bi bi-pencil-square" aria-hidden="true"></i>Edit offer</a>
                 @endif
             @endcan
         </div>

@@ -170,6 +170,6 @@
 </div>
 
 <div class="form-actions">
-    <a class="btn btn-outline-secondary" href="{{ $offer ? route('offers.show', $offer) : route('offers.index') }}">Cancel</a>
-    <button class="btn btn-primary" type="submit">{{ $offer ? 'Save changes' : 'Create offer' }}</button>
+    <a class="btn btn-outline-secondary" href="{{ $offer ? route('offers.show', $offer) : route('offers.index') }}"><i class="bi bi-x-lg" aria-hidden="true"></i>Cancel</a>
+    <button class="btn btn-primary" type="submit"><i class="bi bi-check2" aria-hidden="true"></i>{{ $offer ? 'Save changes' : 'Create offer' }}</button>
 </div>

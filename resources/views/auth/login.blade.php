@@ -56,7 +56,7 @@
                     <label class="form-check-label" for="remember">Keep me signed in</label>
                 </div>
 
-                <button class="btn btn-primary w-100" type="submit">Sign in</button>
+                <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>Sign in</button>
             </form>
         </div>
     </section>

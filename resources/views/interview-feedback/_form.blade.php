@@ -112,9 +112,10 @@
         class="btn btn-outline-secondary"
         href="{{ $feedback ? route('interview-feedback.show', $feedback) : route('interviews.show', $interview) }}"
     >
-        Cancel
+        <i class="bi bi-x-lg" aria-hidden="true"></i>Cancel
     </a>
     <button class="btn btn-primary" type="submit">
+        <i class="bi bi-check2" aria-hidden="true"></i>
         {{ $feedback ? 'Save feedback' : 'Submit feedback' }}
     </button>
 </div>

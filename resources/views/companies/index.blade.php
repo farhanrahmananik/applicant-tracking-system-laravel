@@ -18,7 +18,7 @@
         </div>
 
         @can('companies.create')
-            <a class="btn btn-primary" href="{{ route('companies.create') }}">Create company</a>
+            <a class="btn btn-primary" href="{{ route('companies.create') }}"><i class="bi bi-plus-lg" aria-hidden="true"></i>Create company</a>
         @endcan
     </header>
 
@@ -42,7 +42,7 @@
                 <option value="inactive" @selected(request('status') === 'inactive')>Inactive</option>
             </select>
         </div>
-        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Filter</button>
         @if (request()->filled('search') || request()->filled('status'))
             <a class="btn btn-link" href="{{ route('companies.index') }}">Clear</a>
         @endif
@@ -90,9 +90,9 @@
                             <td class="text-nowrap">{{ $company->created_at->format('M j, Y') }}</td>
                             <td>
                                 <div class="table-actions">
-                                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('companies.show', $company) }}">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('companies.show', $company) }}" aria-label="View {{ $company->name }}" title="View"><i class="bi bi-eye" aria-hidden="true"></i></a>
                                     @can('companies.update')
-                                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('companies.edit', $company) }}">Edit</a>
+                                        <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('companies.edit', $company) }}" aria-label="Edit {{ $company->name }}" title="Edit"><i class="bi bi-pencil" aria-hidden="true"></i></a>
                                     @endcan
                                     @can('companies.delete')
                                         <form
@@ -102,7 +102,7 @@
                                         >
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                            <button class="btn btn-sm btn-outline-danger table-icon-action" type="submit" aria-label="Delete {{ $company->name }}" title="Delete"><i class="bi bi-trash3" aria-hidden="true"></i></button>
                                         </form>
                                     @endcan
                                 </div>

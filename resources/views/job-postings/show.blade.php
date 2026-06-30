@@ -39,9 +39,9 @@
         </div>
 
         <div class="resource-header-actions">
-            <a class="btn btn-outline-secondary" href="{{ route('job-postings.index') }}">Back</a>
+            <a class="btn btn-outline-secondary" href="{{ route('job-postings.index') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i>Back</a>
             @can('job-postings.update')
-                <a class="btn btn-primary" href="{{ route('job-postings.edit', $jobPosting) }}">Edit job posting</a>
+                <a class="btn btn-primary" href="{{ route('job-postings.edit', $jobPosting) }}"><i class="bi bi-pencil-square" aria-hidden="true"></i>Edit job posting</a>
             @endcan
             @can('job-postings.delete')
                 <form

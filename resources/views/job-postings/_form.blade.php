@@ -322,9 +322,10 @@
         class="btn btn-outline-secondary"
         href="{{ $jobPosting ? route('job-postings.show', $jobPosting) : route('job-postings.index') }}"
     >
-        Cancel
+        <i class="bi bi-x-lg" aria-hidden="true"></i>Cancel
     </a>
     <button class="btn btn-primary" type="submit">
+        <i class="bi bi-check2" aria-hidden="true"></i>
         {{ $jobPosting ? 'Save changes' : 'Create job posting' }}
     </button>
 </div>

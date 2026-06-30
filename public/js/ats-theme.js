@@ -22,6 +22,24 @@
         root.setAttribute('data-bs-theme', theme);
     }
 
+    function syncToggle(toggle, theme) {
+        const isDark = theme === 'dark';
+        const icon = toggle.querySelector('[data-theme-icon]');
+        const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+
+        if (toggle instanceof HTMLInputElement) {
+            toggle.checked = isDark;
+        } else {
+            toggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            toggle.setAttribute('aria-label', label);
+            toggle.setAttribute('title', label);
+        }
+
+        if (icon) {
+            icon.className = isDark ? 'bi bi-sun' : 'bi bi-moon-stars';
+        }
+    }
+
     applyTheme(storedTheme() || preferredTheme());
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -31,12 +49,15 @@
             return;
         }
 
-        toggle.checked = root.getAttribute('data-bs-theme') === 'dark';
+        syncToggle(toggle, root.getAttribute('data-bs-theme'));
 
-        toggle.addEventListener('change', function () {
-            const theme = toggle.checked ? 'dark' : 'light';
+        toggle.addEventListener(toggle instanceof HTMLInputElement ? 'change' : 'click', function () {
+            const theme = toggle instanceof HTMLInputElement
+                ? (toggle.checked ? 'dark' : 'light')
+                : (root.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark');
 
             applyTheme(theme);
+            syncToggle(toggle, theme);
 
             try {
                 window.localStorage.setItem(storageKey, theme);

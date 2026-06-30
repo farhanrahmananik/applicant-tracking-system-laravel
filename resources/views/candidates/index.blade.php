@@ -18,7 +18,7 @@
         </div>
 
         @can('candidates.create')
-            <a class="btn btn-primary" href="{{ route('candidates.create') }}">Add candidate</a>
+            <a class="btn btn-primary" href="{{ route('candidates.create') }}"><i class="bi bi-person-plus" aria-hidden="true"></i>Add candidate</a>
         @endcan
     </header>
 
@@ -93,7 +93,7 @@
                 placeholder="Max years"
             >
         </div>
-        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Filter</button>
         @if (collect(['search', 'status', 'source', 'availability', 'experience_min', 'experience_max'])->contains(fn ($key) => request()->filled($key)))
             <a class="btn btn-link" href="{{ route('candidates.index') }}">Clear</a>
         @endif
@@ -159,9 +159,9 @@
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('candidates.show', $candidate) }}">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('candidates.show', $candidate) }}" aria-label="View {{ $candidate->full_name }}" title="View"><i class="bi bi-eye" aria-hidden="true"></i></a>
                                     @can('candidates.edit')
-                                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('candidates.edit', $candidate) }}">Edit</a>
+                                        <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('candidates.edit', $candidate) }}" aria-label="Edit {{ $candidate->full_name }}" title="Edit"><i class="bi bi-pencil" aria-hidden="true"></i></a>
                                     @endcan
                                     @can('candidates.delete')
                                         <form
@@ -171,7 +171,7 @@
                                         >
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                            <button class="btn btn-sm btn-outline-danger table-icon-action" type="submit" aria-label="Delete {{ $candidate->full_name }}" title="Delete"><i class="bi bi-trash3" aria-hidden="true"></i></button>
                                         </form>
                                     @endcan
                                 </div>

@@ -18,7 +18,7 @@
         </div>
 
         @can('interviews.create')
-            <a class="btn btn-primary" href="{{ route('interviews.create') }}">Schedule interview</a>
+            <a class="btn btn-primary" href="{{ route('interviews.create') }}"><i class="bi bi-calendar-plus" aria-hidden="true"></i>Schedule interview</a>
         @endcan
     </header>
 
@@ -64,7 +64,7 @@
             <label class="visually-hidden" for="date_to">To date</label>
             <input class="form-control" id="date_to" name="date_to" type="date" value="{{ request('date_to') }}" title="To date">
         </div>
-        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Filter</button>
         @if (collect(['search', 'type', 'status', 'date_from', 'date_to'])->contains(fn ($key) => request()->filled($key)))
             <a class="btn btn-link" href="{{ route('interviews.index') }}">Clear</a>
         @endif
@@ -117,9 +117,9 @@
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('interviews.show', $interview) }}">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('interviews.show', $interview) }}" aria-label="View interview #{{ $interview->id }}" title="View"><i class="bi bi-eye" aria-hidden="true"></i></a>
                                     @can('interviews.update')
-                                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('interviews.edit', $interview) }}">Edit</a>
+                                        <a class="btn btn-sm btn-outline-secondary table-icon-action" href="{{ route('interviews.edit', $interview) }}" aria-label="Edit interview #{{ $interview->id }}" title="Edit"><i class="bi bi-pencil" aria-hidden="true"></i></a>
                                     @endcan
                                     @can('interviews.delete')
                                         <form
@@ -129,7 +129,7 @@
                                         >
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                            <button class="btn btn-sm btn-outline-danger table-icon-action" type="submit" aria-label="Delete interview #{{ $interview->id }}" title="Delete"><i class="bi bi-trash3" aria-hidden="true"></i></button>
                                         </form>
                                     @endcan
                                 </div>

@@ -45,7 +45,7 @@
                 @endforeach
             </select>
         </div>
-        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-funnel" aria-hidden="true"></i>Filter</button>
         @if (request()->filled('search') || request()->filled('job_posting_id'))
             <a class="btn btn-link" href="{{ route('pipeline.index') }}">Clear</a>
         @endif
