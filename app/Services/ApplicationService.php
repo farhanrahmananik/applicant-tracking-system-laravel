@@ -16,6 +16,7 @@ class ApplicationService
     public function __construct(
         private readonly HiringPipelineService $hiringPipelineService,
         private readonly EmailNotificationService $emailNotificationService,
+        private readonly AuditLogService $auditLogService,
     ) {}
 
     /**
@@ -114,12 +115,18 @@ class ApplicationService
             $data['created_by_id'] = $actorId;
             $data['updated_by_id'] = $actorId;
 
-            return Application::query()->create($data)->load([
+            $application = Application::query()->create($data)->load([
                 'candidate',
                 'jobPosting.company',
                 'createdBy',
                 'updatedBy',
             ]);
+            $this->auditLogService->created(
+                $application,
+                "Application #{$application->getKey()} created.",
+            );
+
+            return $application;
         }, 3);
 
         $this->emailNotificationService->applicationCreated($application);
@@ -133,6 +140,7 @@ class ApplicationService
     public function update(Application $application, array $data): Application
     {
         return DB::transaction(function () use ($application, $data): Application {
+            $before = $this->auditLogService->snapshot($application);
             $this->lockCandidateAndJobPosting($data);
             $this->ensureNoDuplicateActiveApplication($data, $application);
 
@@ -142,6 +150,11 @@ class ApplicationService
 
             $data['updated_by_id'] = Auth::id();
             $application->update($data);
+            $this->auditLogService->updated(
+                $application,
+                $before,
+                "Application #{$application->getKey()} updated.",
+            );
 
             if ($stageChanged) {
                 $application = $this->hiringPipelineService->transition($application, $nextStage);
@@ -158,7 +171,15 @@ class ApplicationService
 
     public function delete(Application $application): void
     {
-        DB::transaction(fn () => $application->delete());
+        DB::transaction(function () use ($application): void {
+            $before = $this->auditLogService->snapshot($application);
+            $application->delete();
+            $this->auditLogService->deleted(
+                $application,
+                "Application #{$application->getKey()} deleted.",
+                $before,
+            );
+        });
     }
 
     /**

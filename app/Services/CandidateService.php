@@ -10,6 +10,10 @@ use Illuminate\Support\Str;
 
 class CandidateService
 {
+    public function __construct(
+        private readonly AuditLogService $auditLogService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $filters
      * @return LengthAwarePaginator<Candidate>
@@ -74,7 +78,13 @@ class CandidateService
         return DB::transaction(function () use ($data): Candidate {
             $data['email'] = Str::lower(trim((string) $data['email']));
 
-            return Candidate::query()->create($data);
+            $candidate = Candidate::query()->create($data);
+            $this->auditLogService->created(
+                $candidate,
+                "Candidate {$candidate->full_name} created.",
+            );
+
+            return $candidate;
         });
     }
 
@@ -84,8 +94,14 @@ class CandidateService
     public function update(Candidate $candidate, array $data): Candidate
     {
         return DB::transaction(function () use ($candidate, $data): Candidate {
+            $before = $this->auditLogService->snapshot($candidate);
             $data['email'] = Str::lower(trim((string) $data['email']));
             $candidate->update($data);
+            $this->auditLogService->updated(
+                $candidate,
+                $before,
+                "Candidate {$candidate->full_name} updated.",
+            );
 
             return $candidate->refresh();
         });
@@ -93,7 +109,15 @@ class CandidateService
 
     public function delete(Candidate $candidate): void
     {
-        DB::transaction(fn () => $candidate->delete());
+        DB::transaction(function () use ($candidate): void {
+            $before = $this->auditLogService->snapshot($candidate);
+            $candidate->delete();
+            $this->auditLogService->deleted(
+                $candidate,
+                "Candidate {$candidate->full_name} deleted.",
+                $before,
+            );
+        });
     }
 
     /**

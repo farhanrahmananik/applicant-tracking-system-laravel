@@ -131,6 +131,17 @@
                         Reports
                     </a>
                 @endcan
+
+                @can('view-audit-logs')
+                    <div class="app-nav-label">Governance</div>
+                    <a
+                        class="app-nav-link {{ request()->routeIs('audit-logs.*') ? 'active' : '' }}"
+                        href="{{ route('audit-logs.index') }}"
+                        @if (request()->routeIs('audit-logs.*')) aria-current="page" @endif
+                    >
+                        Audit Logs
+                    </a>
+                @endcan
             </nav>
         </aside>
 

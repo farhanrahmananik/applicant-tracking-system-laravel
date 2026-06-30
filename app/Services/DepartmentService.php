@@ -11,6 +11,10 @@ use Illuminate\Support\Str;
 
 class DepartmentService
 {
+    public function __construct(
+        private readonly AuditLogService $auditLogService,
+    ) {}
+
     /**
      * @param  array{search?: mixed, status?: mixed, company_id?: mixed}  $filters
      * @return LengthAwarePaginator<Department>
@@ -84,7 +88,13 @@ class DepartmentService
                 (string) ($data['slug'] ?? $data['name']),
             );
 
-            return Department::query()->create($data);
+            $department = Department::query()->create($data);
+            $this->auditLogService->created(
+                $department,
+                "Department {$department->name} created.",
+            );
+
+            return $department;
         });
     }
 
@@ -94,6 +104,7 @@ class DepartmentService
     public function update(Department $department, array $data): Department
     {
         return DB::transaction(function () use ($department, $data): Department {
+            $before = $this->auditLogService->snapshot($department);
             $data['slug'] = $this->generateUniqueSlug(
                 (int) $data['company_id'],
                 (string) ($data['slug'] ?? $data['name']),
@@ -101,6 +112,11 @@ class DepartmentService
             );
 
             $department->update($data);
+            $this->auditLogService->updated(
+                $department,
+                $before,
+                "Department {$department->name} updated.",
+            );
 
             return $department->refresh()->load('company');
         });
@@ -108,7 +124,15 @@ class DepartmentService
 
     public function delete(Department $department): void
     {
-        DB::transaction(fn () => $department->delete());
+        DB::transaction(function () use ($department): void {
+            $before = $this->auditLogService->snapshot($department);
+            $department->delete();
+            $this->auditLogService->deleted(
+                $department,
+                "Department {$department->name} deleted.",
+                $before,
+            );
+        });
     }
 
     private function generateUniqueSlug(

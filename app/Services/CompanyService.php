@@ -9,6 +9,10 @@ use Illuminate\Support\Str;
 
 class CompanyService
 {
+    public function __construct(
+        private readonly AuditLogService $auditLogService,
+    ) {}
+
     /**
      * @param  array{search?: mixed, status?: mixed}  $filters
      * @return LengthAwarePaginator<Company>
@@ -46,7 +50,10 @@ class CompanyService
                 (string) ($data['slug'] ?? $data['name']),
             );
 
-            return Company::query()->create($data);
+            $company = Company::query()->create($data);
+            $this->auditLogService->created($company, "Company {$company->name} created.");
+
+            return $company;
         });
     }
 
@@ -56,12 +63,18 @@ class CompanyService
     public function update(Company $company, array $data): Company
     {
         return DB::transaction(function () use ($company, $data): Company {
+            $before = $this->auditLogService->snapshot($company);
             $data['slug'] = $this->generateUniqueSlug(
                 (string) ($data['slug'] ?? $data['name']),
                 $company,
             );
 
             $company->update($data);
+            $this->auditLogService->updated(
+                $company,
+                $before,
+                "Company {$company->name} updated.",
+            );
 
             return $company->refresh();
         });
@@ -69,7 +82,15 @@ class CompanyService
 
     public function delete(Company $company): void
     {
-        DB::transaction(fn () => $company->delete());
+        DB::transaction(function () use ($company): void {
+            $before = $this->auditLogService->snapshot($company);
+            $company->delete();
+            $this->auditLogService->deleted(
+                $company,
+                "Company {$company->name} deleted.",
+                $before,
+            );
+        });
     }
 
     private function generateUniqueSlug(string $source, ?Company $ignore = null): string
