@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATS Laravel — Applicant Tracking System | Laravel 12 Portfolio Project</title>
+<meta name="description" content="Production-style Applicant Tracking System built with Laravel 12, featuring job postings, candidate profiles, application tracking, interview workflows, reports, RBAC, and audit-ready recruitment management.">
+<link rel="canonical" href="https://farhanrahmananik.github.io/applicant-tracking-system-laravel/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ATS Laravel">
+<meta property="og:title" content="ATS Laravel — Applicant Tracking System">
+<meta property="og:description" content="Production-style Applicant Tracking System built with Laravel 12, featuring job postings, candidate profiles, application tracking, interview workflows, reports, RBAC, and audit-ready recruitment management.">
+<meta property="og:url" content="https://farhanrahmananik.github.io/applicant-tracking-system-laravel/">
+<meta property="og:image" content="https://farhanrahmananik.github.io/applicant-tracking-system-laravel/assets/img/og-preview.png?v=20260704">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ATS Laravel — Applicant Tracking System portfolio banner">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ATS Laravel — Applicant Tracking System">
+<meta name="twitter:description" content="Production-style Applicant Tracking System built with Laravel 12, featuring job postings, candidate profiles, application tracking, interview workflows, reports, RBAC, and audit-ready recruitment management.">
+<meta name="twitter:image" content="https://farhanrahmananik.github.io/applicant-tracking-system-laravel/assets/img/og-preview.png?v=20260704">
+
+<link rel="stylesheet" href="assets/css/github-pages.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Z" fill="currentColor"/><path d="M4 20.5c0-3.6 3.58-6.5 8-6.5s8 2.9 8 6.5V21H4v-.5Z" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-title">Applicant Tracking</span>
+        <span class="brand-subtitle">HR Workspace</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" id="siteNav">
+      <a href="#overview">Overview</a>
+      <a href="#modules">Modules</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#tech-stack">Tech Stack</a>
+      <a href="#testing">Testing</a>
+      <a href="#screenshots">Screenshots</a>
+      <a class="btn btn-primary nav-cta" href="https://github.com/farhanrahmananik/applicant-tracking-system-laravel" target="_blank" rel="noopener">View on GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="shell hero-inner">
+      <p class="eyebrow">Applicant Tracking System &middot; Portfolio Project</p>
+      <h1>ATS Laravel<span class="hero-title-sub">Applicant Tracking System</span></h1>
+      <p class="hero-lede">
+        Production-style Applicant Tracking System built with Laravel 12, featuring job postings, candidate profiles,
+        application tracking, interview workflows, reports, RBAC, and audit-ready recruitment management.
+      </p>
+
+      <div class="hero-pipeline" aria-label="Recruitment workflow">
+        <span>Jobs</span><span class="sep">&rsaquo;</span>
+        <span>Candidates</span><span class="sep">&rsaquo;</span>
+        <span>Applications</span><span class="sep">&rsaquo;</span>
+        <span>Interviews</span><span class="sep">&rsaquo;</span>
+        <span>Reports</span>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/farhanrahmananik/applicant-tracking-system-laravel" target="_blank" rel="noopener">View on GitHub</a>
+        <a class="btn btn-ghost" href="https://github.com/farhanrahmananik/applicant-tracking-system-laravel#readme" target="_blank" rel="noopener">Read Documentation</a>
+      </div>
+
+      <p class="hero-note">Static portfolio page only — the Laravel application itself is not hosted here.</p>
+    </div>
+  </section>
+
+  <section class="section" id="overview">
+    <div class="shell">
+      <h2 class="section-title">Project Overview</h2>
+      <p class="section-lede">
+        The project models a practical recruitment workflow from organization setup and job publishing through
+        candidate evaluation, pipeline movement, interviews, offers, reporting, and audit history. It demonstrates
+        production-style Laravel architecture and engineering practice as a local portfolio and demonstration
+        application, not a claim of a hosted production SaaS service.
+      </p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-value">5</span>
+          <span class="stat-label">Roles</span>
+          <span class="stat-hint">Super Admin, HR Manager, Recruiter, Interviewer, Candidate</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">43</span>
+          <span class="stat-label">Permissions</span>
+          <span class="stat-hint">Gate-registered capability matrix</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">150</span>
+          <span class="stat-label">Automated Tests</span>
+          <span class="stat-hint">886 assertions, all passing</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">13</span>
+          <span class="stat-label">Implemented Modules</span>
+          <span class="stat-hint">Organization to offer, reporting, and audit</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="modules">
+    <div class="shell">
+      <h2 class="section-title">Core Modules</h2>
+      <p class="section-lede">Recruitment workflow modules implemented in the application.</p>
+
+      <div class="card-grid">
+        <article class="feature-card">
+          <h3>Authentication</h3>
+          <p>Active-user login and logout, intended-route redirects, login throttling, and Gate-based authorization.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Role &amp; Permission Management</h3>
+          <p>Seeded role/permission matrix, Gate registration, and a Super Admin Gate-level bypass.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Dashboard</h3>
+          <p>Authenticated overview of users, active/inactive accounts, roles, permissions, and role distribution.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Job Posting Management</h3>
+          <p>Company and department assignments, compensation ranges, publishing states, filters, and soft deletes.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Candidate Management</h3>
+          <p>Internal candidate profiles, contact and professional details, availability and source filters.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Resume / CV Management</h3>
+          <p>Private PDF, DOC, and DOCX uploads, primary-resume handling, and permission-controlled downloads.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Application Tracking</h3>
+          <p>Candidate-to-job applications with duplicate-active-application protection and status tracking.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Interview Scheduling</h3>
+          <p>Scheduling for eligible applications, active interviewer validation, updates, and cancellation.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Application Status Pipeline</h3>
+          <p>Board-style pipeline with controlled stage transitions, transition notes, and stage history.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Recruiter / HR Workflow</h3>
+          <p>Role-scoped day-to-day recruitment operations from job posting through offers.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Reports</h3>
+          <p>Application, candidate, job posting, interview, pipeline, and offer summaries with CSV exports.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Audit Logs</h3>
+          <p>Filterable activity history with before/after snapshots and sensitive-value redaction.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Testing &amp; Documentation</h3>
+          <p>150 automated feature tests covering authorization, workflows, exports, and page rendering.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="architecture">
+    <div class="shell two-col">
+      <div>
+        <h2 class="section-title">Architecture Highlights</h2>
+        <p class="section-lede">A conventional, service-oriented Laravel structure.</p>
+        <ul class="check-list">
+          <li>Thin controllers coordinate requests, services, and responses.</li>
+          <li>Form Requests own authorization checks, normalization, and validation.</li>
+          <li>Services contain query composition, transactions, status rules, exports, notifications, and audit behavior.</li>
+          <li>Gates and middleware enforce role/permission access, with a Super Admin Gate-level bypass.</li>
+          <li>Eloquent relationships connect users, organizations, jobs, candidates, applications, interviews, feedback, and offers.</li>
+          <li>Database transactions and row locks protect application, pipeline, resume, interview, and offer operations.</li>
+          <li>Queued Laravel Notifications isolate candidate-facing mail from HTTP workflows.</li>
+          <li>Feature tests exercise HTTP behavior, authorization, validation, and major render paths.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="panel" id="database">
+          <h3>Database &amp; ERD</h3>
+          <p>
+            The MySQL schema is documented as a design contract covering users, roles, permissions, organizations,
+            jobs, candidates, applications, interviews, offers, and audit records.
+          </p>
+          <ul class="link-list">
+            <li><a href="https://github.com/farhanrahmananik/applicant-tracking-system-laravel/blob/main/docs/database/erd.md" target="_blank" rel="noopener">Entity relationship diagram</a></li>
+            <li><a href="https://github.com/farhanrahmananik/applicant-tracking-system-laravel/blob/main/docs/database/database-design.md" target="_blank" rel="noopener">Database design</a></li>
+            <li><a href="https://github.com/farhanrahmananik/applicant-tracking-system-laravel/blob/main/docs/database/schema-blueprint.md" target="_blank" rel="noopener">Schema blueprint</a></li>
+            <li><a href="https://github.com/farhanrahmananik/applicant-tracking-system-laravel/blob/main/docs/database/migration-plan.md" target="_blank" rel="noopener">Migration plan</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="tech-stack">
+    <div class="shell">
+      <h2 class="section-title">Tech Stack</h2>
+      <div class="pill-row">
+        <span class="pill">PHP 8.2+</span>
+        <span class="pill">Laravel 12</span>
+        <span class="pill">MySQL</span>
+        <span class="pill">Blade</span>
+        <span class="pill">Bootstrap 5</span>
+        <span class="pill">Vite 6</span>
+        <span class="pill">PHPUnit 11</span>
+        <span class="pill">Composer</span>
+        <span class="pill">Laravel Pint</span>
+        <span class="pill">Git</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="testing">
+    <div class="shell">
+      <h2 class="section-title">Testing &amp; Quality</h2>
+      <p class="section-lede">Latest verified project status at the end of the Testing / Quality Review scope.</p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-value">150</span>
+          <span class="stat-label">Tests passing</span>
+          <span class="stat-hint">886 assertions</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">&#10003;</span>
+          <span class="stat-label">migrate:fresh --seed</span>
+          <span class="stat-hint">Passed</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">&#10003;</span>
+          <span class="stat-label">npm run build</span>
+          <span class="stat-hint">Passed</span>
+        </div>
+      </div>
+      <p class="section-lede">
+        Coverage includes authentication, throttling, inactive users, permissions, CRUD workflows, soft deletes,
+        private resume handling, pipeline and offer transitions, interview rules, queued notifications, report/audit
+        exports, filtering, and protected admin page rendering.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="workflow">
+    <div class="shell">
+      <h2 class="section-title">Reports, Audit &amp; Workflow Visibility</h2>
+      <p class="section-lede">
+        Recruitment reports support validated filters across company, department, job, candidate, application,
+        interview, pipeline, and offer data. CSV downloads are streamed with spreadsheet-formula injection
+        protection. Audit exports carry timestamps, actors, actions, and sanitized summaries, with sensitive
+        values redacted in stored snapshots.
+      </p>
+
+      <ol class="workflow-steps">
+        <li><span>1</span>Configure companies &amp; departments</li>
+        <li><span>2</span>Create &amp; publish job postings</li>
+        <li><span>3</span>Add candidates &amp; private resumes</li>
+        <li><span>4</span>Link candidates via applications</li>
+        <li><span>5</span>Move applications through pipeline stages</li>
+        <li><span>6</span>Schedule interviews &amp; collect feedback</li>
+        <li><span>7</span>Manage employment offers</li>
+        <li><span>8</span>Review reports &amp; audit history</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="screenshots">
+    <div class="shell">
+      <h2 class="section-title">Screenshots</h2>
+      <div class="screenshot-grid">
+        <figure class="screenshot-card">
+          <img src="screenshots/dashboard-dark.png" alt="Applicant Tracking System dashboard in dark mode" loading="lazy" width="2560" height="1561">
+          <figcaption>Dashboard &mdash; Dark Mode</figcaption>
+        </figure>
+        <figure class="screenshot-card">
+          <img src="screenshots/login-dark.png" alt="Applicant Tracking System login screen in dark mode" loading="lazy" width="2560" height="1305">
+          <figcaption>Login &mdash; Dark Mode</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="highlights">
+    <div class="shell">
+      <h2 class="section-title">Portfolio Highlights</h2>
+      <ul class="check-list two-cols">
+        <li>Service-oriented Laravel architecture with thin controllers and Form Request validation.</li>
+        <li>Role-based access via Gates and middleware across 5 roles and 43 permissions.</li>
+        <li>150 automated feature tests covering workflows, permissions, and exports.</li>
+        <li>CSV-exportable reports and redacted audit trails for recruitment compliance visibility.</li>
+        <li>Board-style hiring pipeline with controlled, auditable stage transitions.</li>
+        <li>Responsive dark/light SaaS admin interface built without third-party JS UI libraries.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <p>&copy; 2026 Farhan Rahman Anik &mdash; Applicant Tracking System (ATS Laravel)</p>
+    <a class="btn btn-ghost footer-link" href="https://github.com/farhanrahmananik/applicant-tracking-system-laravel" target="_blank" rel="noopener">github.com/farhanrahmananik/applicant-tracking-system-laravel</a>
+  </div>
+</footer>
+
+<script src="assets/js/github-pages.js"></script>
+</body>
+</html>
