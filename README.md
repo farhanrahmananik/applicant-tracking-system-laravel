@@ -4,6 +4,14 @@ A portfolio-grade Applicant Tracking System built with Laravel 12 for HR departm
 
 This repository demonstrates production-style Laravel architecture and engineering practices. It is a local portfolio and demonstration application, not a claim of a hosted production SaaS service.
 
+## Live Portfolio Page
+
+A static GitHub Pages landing page for this project is available at:
+
+https://farhanrahmananik.github.io/applicant-tracking-system-laravel/
+
+This is a static HTML/CSS/JS portfolio page served from `docs/` and does not run the Laravel application itself.
+
 ## Project Highlights
 
 - Role- and permission-based access enforced through Laravel Gates and route middleware
