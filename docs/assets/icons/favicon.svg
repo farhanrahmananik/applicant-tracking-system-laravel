@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">ATS Laravel candidate profile</title>
+  <rect width="64" height="64" rx="14" fill="#ff6767" />
+  <circle cx="32" cy="23" r="10" fill="#ffffff" />
+  <path d="M14 50c0-8.3 8.1-15 18-15s18 6.7 18 15v2H14v-2Z" fill="#ffffff" />
+</svg>
